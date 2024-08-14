@@ -77,7 +77,8 @@ def generate_dataset(
     seed: int = 42,
     n_examples: int = 1000,
     diff_lb: float = 0,
-    diff_ub: float = 1
+    diff_ub: float = 1,
+    examples: list | None = None
 ) -> None:
     """
     generates dataset
@@ -89,12 +90,15 @@ def generate_dataset(
     diff_ub: upper bound for difficulty
     """
     set_seed(seed)
-    os.makedirs(path)
+    os.makedirs(path, exist_ok=True)
     tasks_path = os.path.join(path, 'tasks')
-    os.makedirs(tasks_path)
+    os.makedirs(tasks_path, exist_ok=True)
     generators_mapper = get_generators()
     verifiers_mapper = get_verifiers()
-    keys = sorted(generators_mapper.keys())
+    if examples is not None:
+        keys = examples
+    else:
+        keys = sorted(generators_mapper.keys())
     k = len(keys)
     desc = f'task 0/{k}, example 0/{n_examples}'
     pbar = tqdm.tqdm(enumerate(keys), desc=desc, position=0, leave=True, total=k)
