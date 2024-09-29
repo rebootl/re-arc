@@ -8,13 +8,13 @@ def generate_dbc1a6ce(diff_lb: float, diff_ub: float) -> dict:
     colopts = remove(8, interval(0, 10, 1))
     h = unifint(diff_lb, diff_ub, dim_bounds)
     w = unifint(diff_lb, diff_ub, dim_bounds)
-    bgc = choice(colopts)
+    bgc = 0 # choice(colopts)
     c = canvas(bgc, (h, w))
     inds = totuple(asindices(c))
-    card_bounds = (0, max(1, (h * w) // 4))
+    card_bounds = (0, max(1, (h * w) // 8))
     num = unifint(diff_lb, diff_ub, card_bounds)
     s = sample(inds, num)
-    fgcol = choice(remove(bgc, colopts))
+    fgcol = 1 # choice(remove(bgc, colopts))
     gi = fill(c, fgcol, s)
     resh = frozenset()
     for x, r in enumerate(gi):
@@ -44,8 +44,8 @@ def generate_2281f1f4(diff_lb: float, diff_ub: float) -> dict:
     tp = sample(interval(0, w - 1, 1), numtop)
     rp = sample(interval(1, h, 1), numright)
     res = combine(apply(lbind(astuple, 0), tp), apply(rbind(astuple, w - 1), rp))
-    bgc = choice(colopts)
-    dc = choice(remove(bgc, colopts))
+    bgc = 0 # choice(colopts)
+    dc = 5 # choice(remove(bgc, colopts))
     gi = fill(canvas(bgc, (h, w)), dc, res)
     go = fill(gi, 2, product(rp, tp))
     rotf = choice((identity, rot90, rot180, rot270))
@@ -60,7 +60,7 @@ def generate_c1d99e64(diff_lb: float, diff_ub: float) -> dict:
     h = unifint(diff_lb, diff_ub, dim_bounds)
     w = unifint(diff_lb, diff_ub, dim_bounds)
     nofrontcol = choice(colopts)
-    noisefrontcol = choice(remove(nofrontcol, colopts))
+    noisefrontcol = 0 # choice(remove(nofrontcol, colopts))
     gi = canvas(nofrontcol, (h, w))
     cands = totuple(asindices(gi))
     horifront_bounds = (1, h//4)
@@ -86,12 +86,12 @@ def generate_623ea044(diff_lb: float, diff_ub: float) -> dict:
     colopts = interval(0, 10, 1)
     h = unifint(diff_lb, diff_ub, dim_bounds)
     w = unifint(diff_lb, diff_ub, dim_bounds)
-    bgc = choice(colopts)
+    bgc = 0 # choice(colopts)
     g = canvas(bgc, (h, w))
     fullinds = asindices(g)
     inds = totuple(asindices(g))
     card_bounds = (0, max(int(h * w * 0.1), 1))
-    numdots = unifint(diff_lb, diff_ub, card_bounds)
+    numdots = 1 # unifint(diff_lb, diff_ub, card_bounds)
     dots = sample(inds, numdots)
     gi = canvas(bgc, (h, w))
     fgc = choice(remove(bgc, colopts))
@@ -105,7 +105,7 @@ def generate_623ea044(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_1190e5a7(diff_lb: float, diff_ub: float) -> dict:
     dim_bounds = (3, 30)
-    colopts = interval(0, 10, 1)
+    colopts = interval(1, 10, 1)
     h = unifint(diff_lb, diff_ub, dim_bounds)
     w = unifint(diff_lb, diff_ub, dim_bounds)
     bgc = choice(colopts)
@@ -127,7 +127,8 @@ def generate_1190e5a7(diff_lb: float, diff_ub: float) -> dict:
         vf_selection.append(vf)
         vf_options = difference(vf_options, (vf - 1, vf, vf + 1))
     remcols = remove(bgc, colopts)
-    rcf = lambda x: recolor(choice(remcols), x)
+    lcol = choice(remcols)
+    rcf = lambda x: recolor(lcol, x)
     hfs = mapply(chain(rcf, hfrontier, toivec), tuple(hf_selection))
     vfs = mapply(chain(rcf, vfrontier, tojvec), tuple(vf_selection))
     gi = paint(c, combine(hfs, vfs))
@@ -136,7 +137,7 @@ def generate_1190e5a7(diff_lb: float, diff_ub: float) -> dict:
 
 
 def generate_5614dbcf(diff_lb: float, diff_ub: float) -> dict:
-    dim_bounds = (2, 10)
+    dim_bounds = (3, 3)
     col_card_bounds = (1, 8)
     noise_card_bounds = (0, 8)
     colopts = remove(5, interval(1, 10, 1))
@@ -168,7 +169,7 @@ def generate_05269061(diff_lb: float, diff_ub: float) -> dict:
     d = unifint(diff_lb, diff_ub, dim_bounds)
     go = canvas(0, (d, d))
     gi = canvas(0, (d, d))
-    if choice((True, False)):
+    if True: # choice((True, False)):
         period_bounds = (2, min(2*d-2, 9))
         num = unifint(diff_lb, diff_ub, period_bounds)
         cols = tuple(choice(colopts) for k in range(num))
@@ -236,11 +237,11 @@ def generate_2204b7a8(diff_lb: float, diff_ub: float) -> dict:
     while True:
         h = unifint(diff_lb, diff_ub, dim_bounds)
         w = unifint(diff_lb, diff_ub, dim_bounds)
-        bgc = choice(colopts)
+        bgc = 0 # choice(colopts)
         remcols = remove(bgc, colopts)
         c = canvas(bgc, (h, w))
         inds = totuple(shift(asindices(canvas(0, (h, w - 2))), RIGHT))
-        ccol = choice(remcols)
+        ccol = 3 # choice(remcols)
         remcols2 = remove(ccol, remcols)
         c1 = choice(remcols2)
         c2 = choice(remove(c1, remcols2))
@@ -270,17 +271,19 @@ def generate_23581191(diff_lb: float, diff_ub: float) -> dict:
     f = fork(combine, hfrontier, vfrontier)
     h = unifint(diff_lb, diff_ub, dim_bounds)
     w = unifint(diff_lb, diff_ub, dim_bounds)
-    bgcol = choice(colopts)
+    bgcol = 0 # choice(colopts)
     remcols = remove(bgcol, colopts)
     c = canvas(bgcol, (h, w))
     inds = totuple(asindices(c))
     acol = choice(remcols)
     bcol = choice(remove(acol, remcols))
     card_bounds = (1, (h * w) // 4)
-    na = unifint(diff_lb, diff_ub, card_bounds)
-    nb = unifint(diff_lb, diff_ub, card_bounds)
+    na = 1 # unifint(diff_lb, diff_ub, card_bounds)
+    nb = 1 # unifint(diff_lb, diff_ub, card_bounds)
     a = sample(inds, na)
-    b = sample(difference(inds, a), nb)
+    # avoid 2 points on same height/width
+    # b = sample(difference(inds, a), nb)
+    b = sample(sfilter(inds, lambda x: x[0] is not a[0][0] and x[1] is not a[0][1]), nb)
     gi = fill(c, acol, a)
     gi = fill(gi, bcol, b)
     fa = apply(first, a)
@@ -299,13 +302,13 @@ def generate_23581191(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_8be77c9e(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (1, 15))
-    w = unifint(diff_lb, diff_ub, (1, 30))
-    bgc = choice(cols)
+    h = 3 # unifint(diff_lb, diff_ub, (1, 15))
+    w = 3 # unifint(diff_lb, diff_ub, (1, 30))
+    bgc = 0 # choice(cols)
     gi = canvas(bgc, (h, w))
     remcols = remove(bgc, cols)
-    numc = unifint(diff_lb, diff_ub, (0, min(9, h * w)))
-    colsch = sample(cols, numc)
+    numc = 1 # unifint(diff_lb, diff_ub, (0, min(9, h * w)))
+    colsch = (1,) # sample(cols, numc)
     inds = totuple(asindices(gi))
     for col in colsch:
         num = unifint(diff_lb, diff_ub, (1, max(1, len(inds) // numc)))
@@ -317,14 +320,15 @@ def generate_8be77c9e(diff_lb: float, diff_ub: float) -> dict:
 
 
 def generate_6d0aefbc(diff_lb: float, diff_ub: float) -> dict:
-    dim_bounds = (1, 30)
-    cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (1, 30))
-    w = unifint(diff_lb, diff_ub, (1, 15))
+    # dim_bounds = (1, 30)
+    cols = interval(1, 10, 1)
+    cols = remove(5, cols)
+    h = 3 # unifint(diff_lb, diff_ub, (1, 30))
+    w = 3 # unifint(diff_lb, diff_ub, (1, 15))
     bgc = choice(cols)
     gi = canvas(bgc, (h, w))
     remcols = remove(bgc, cols)
-    numc = unifint(diff_lb, diff_ub, (0, min(9, h * w)))
+    numc = 2 # unifint(diff_lb, diff_ub, (0, min(9, h * w)))
     colsch = sample(remcols, numc)
     inds = totuple(asindices(gi))
     for col in colsch:
@@ -337,13 +341,13 @@ def generate_6d0aefbc(diff_lb: float, diff_ub: float) -> dict:
 
 
 def generate_74dd1130(diff_lb: float, diff_ub: float) -> dict:
-    cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (1, 30))
-    w = unifint(diff_lb, diff_ub, (1, 30))
-    bgc = choice(cols)
+    cols = interval(1, 10, 1)
+    h = 3 # unifint(diff_lb, diff_ub, (1, 30))
+    w = 3 # unifint(diff_lb, diff_ub, (1, 30))
+    bgc = 5 # choice(cols)
     gi = canvas(bgc, (h, w))
     remcols = remove(bgc, cols)
-    numc = unifint(diff_lb, diff_ub, (0, min(9, h * w)))
+    numc = 2 # unifint(diff_lb, diff_ub, (0, min(9, h * w)))
     colsch = sample(remcols, numc)
     inds = totuple(asindices(gi))
     for col in colsch:
@@ -357,13 +361,13 @@ def generate_74dd1130(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_62c24649(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (1, 15))
-    w = unifint(diff_lb, diff_ub, (1, 15))
-    bgc = choice(cols)
+    h = 3 # unifint(diff_lb, diff_ub, (1, 15))
+    w = 3 # unifint(diff_lb, diff_ub, (1, 15))
+    bgc = 0 # choice(cols)
     gi = canvas(bgc, (h, w))
     remcols = remove(bgc, cols)
     numc = unifint(diff_lb, diff_ub, (0, min(9, h * w)))
-    colsch = sample(remcols, numc)
+    colsch = (1, 2, 3) # sample(remcols, numc)
     inds = totuple(asindices(gi))
     for col in colsch:
         num = unifint(diff_lb, diff_ub, (1, max(1, len(inds) // numc)))
@@ -379,13 +383,15 @@ def generate_62c24649(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_6150a2bd(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (1, 30))
-    w = unifint(diff_lb, diff_ub, (1, 30))
-    bgc = choice(cols)
+    h = 3 # unifint(diff_lb, diff_ub, (1, 30))
+    w = 3 # unifint(diff_lb, diff_ub, (1, 30))
+    bgc = 0 # choice(cols)
     gi = canvas(bgc, (h, w))
     remcols = remove(bgc, cols)
-    numc = unifint(diff_lb, diff_ub, (0, min(9, h * w)))
+    remcols = remove(5, cols)
+    numc = unifint(diff_lb, diff_ub, (1, 3)) # min(9, h * w)))
     colsch = sample(remcols, numc)
+    colsch = (*colsch, 5)
     inds = totuple(asindices(gi))
     for col in colsch:
         num = unifint(diff_lb, diff_ub, (1, max(1, len(inds) // numc)))
@@ -397,13 +403,13 @@ def generate_6150a2bd(diff_lb: float, diff_ub: float) -> dict:
 
 
 def generate_6fa7a44f(diff_lb: float, diff_ub: float) -> dict:
-    cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (1, 15))
-    w = unifint(diff_lb, diff_ub, (1, 30))
+    cols = interval(1, 10, 1)
+    h = 3 # unifint(diff_lb, diff_ub, (1, 15))
+    w = 3 # unifint(diff_lb, diff_ub, (1, 30))
     bgc = choice(cols)
     gi = canvas(bgc, (h, w))
     remcols = remove(bgc, cols)
-    numc = unifint(diff_lb, diff_ub, (0, min(9, h * w)))
+    numc = unifint(diff_lb, diff_ub, (3, 5)) # min(9, h * w)))
     colsch = sample(remcols, numc)
     inds = totuple(asindices(gi))
     for col in colsch:
@@ -417,12 +423,12 @@ def generate_6fa7a44f(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_8d5021e8(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (1, 10))
-    w = unifint(diff_lb, diff_ub, (1, 15))
-    bgc = choice(cols)
+    h = 3 # unifint(diff_lb, diff_ub, (1, 10))
+    w = 2 # unifint(diff_lb, diff_ub, (1, 15))
+    bgc = 0 # choice(cols)
     gi = canvas(bgc, (h, w))
     remcols = remove(bgc, cols)
-    numc = unifint(diff_lb, diff_ub, (0, min(9, h * w)))
+    numc = 1 # unifint(diff_lb, diff_ub, (0, min(9, h * w)))
     colsch = sample(remcols, numc)
     inds = totuple(asindices(gi))
     for col in colsch:
@@ -438,14 +444,14 @@ def generate_8d5021e8(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_0520fde7(diff_lb: float, diff_ub: float) -> dict:
     cols = remove(2, interval(0, 10, 1))
-    h = unifint(diff_lb, diff_ub, (2, 30))
-    w = unifint(diff_lb, diff_ub, (2, 14))
+    h = 3 # unifint(diff_lb, diff_ub, (2, 30))
+    w = 3 # unifint(diff_lb, diff_ub, (2, 14))
     bgc = 0
     remcols = remove(bgc, cols)
-    barcol = choice(remcols)
+    barcol = 5 # choice(remcols)
     remcols = remove(barcol, remcols)
     cola = choice(remcols)
-    colb = choice(remcols)
+    colb = cola # choice(remcols)
     canv = canvas(bgc, (h, w))
     inds = totuple(asindices(canv))
     gbar = canvas(barcol, (h, 1))
@@ -467,9 +473,9 @@ def generate_0520fde7(diff_lb: float, diff_ub: float) -> dict:
     gib = fill(canv, colb, b)
     gi = hconcat(hconcat(gia, gbar), gib)
     go = fill(canv, 2, set(a) & set(b))
-    if choice((True, False)):
-        gi = dmirror(gi)
-        go = dmirror(go)
+    # if choice((True, False)):
+    #     gi = dmirror(gi)
+    #     go = dmirror(go)
     return {'input': gi, 'output': go}
 
 
@@ -496,14 +502,14 @@ def generate_46442a0e(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_1b2d62fb(diff_lb: float, diff_ub: float) -> dict:
     cols = remove(8, interval(0, 10, 1))
-    h = unifint(diff_lb, diff_ub, (2, 30))
-    w = unifint(diff_lb, diff_ub, (2, 14))
+    h = 5 # unifint(diff_lb, diff_ub, (2, 30))
+    w = 3 # unifint(diff_lb, diff_ub, (2, 14))
     bgc = 0
     remcols = remove(bgc, cols)
-    barcol = choice(remcols)
+    barcol = 1 # choice(remcols)
     remcols = remove(barcol, remcols)
     cola = choice(remcols)
-    colb = choice(remcols)
+    colb = cola # choice(remcols)
     canv = canvas(0, (h, w))
     inds = totuple(asindices(canv))
     gbar = canvas(barcol, (h, 1))
@@ -525,22 +531,22 @@ def generate_1b2d62fb(diff_lb: float, diff_ub: float) -> dict:
     gib = fill(canv, colb, b)
     gi = hconcat(hconcat(gia, gbar), gib)
     go = fill(canv, 8, ofcolor(gia, 0) & ofcolor(gib, 0))
-    if choice((True, False)):
-        gi = dmirror(gi)
-        go = dmirror(go)
+    # if choice((True, False)):
+    #     gi = dmirror(gi)
+    #     go = dmirror(go)
     return {'input': gi, 'output': go}
 
 
 def generate_3428a4f5(diff_lb: float, diff_ub: float) -> dict:
-    cols = remove(3, interval(0, 10, 1))
-    h = unifint(diff_lb, diff_ub, (1, 30))
-    w = unifint(diff_lb, diff_ub, (1, 14))
+    # cols = remove(3, interval(0, 10, 1))
+    h = 5 # unifint(diff_lb, diff_ub, (1, 30))
+    w = 6 # unifint(diff_lb, diff_ub, (1, 14))
     bgc = 0
-    remcols = remove(bgc, cols)
-    barcol = choice(remcols)
-    remcols = remove(barcol, remcols)
-    cola = choice(remcols)
-    colb = choice(remcols)
+    # remcols = remove(bgc, cols)
+    barcol = 4 # choice(remcols)
+    # remcols = remove(barcol, remcols)
+    cola = 2 # choice(remcols)
+    colb = 2 #choice(remcols)
     canv = canvas(bgc, (h, w))
     inds = totuple(asindices(canv))
     gbar = canvas(barcol, (h, 1))
@@ -562,22 +568,22 @@ def generate_3428a4f5(diff_lb: float, diff_ub: float) -> dict:
     gib = fill(canv, colb, b)
     gi = hconcat(hconcat(gia, gbar), gib)
     go = fill(canv, 3, (set(a) | set(b)) - (set(a) & set(b)))
-    if choice((True, False)):
-        gi = dmirror(gi)
-        go = dmirror(go)
+    # if choice((True, False)):
+    gi = dmirror(gi)
+    go = dmirror(go)
     return {'input': gi, 'output': go}
 
 
 def generate_42a50994(diff_lb: float, diff_ub: float) -> dict:
     colopts = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (1, 30))
-    w = unifint(diff_lb, diff_ub, (1, 30))
-    bgc = choice(colopts)
+    h = unifint(diff_lb, diff_ub, (12, 20))
+    w = unifint(diff_lb, diff_ub, (12, 20))
+    bgc = 0 # choice(colopts)
     remcols = remove(bgc, colopts)
     c = canvas(bgc, (h, w))
-    card_bounds = (0, max(0, (h * w) // 2 - 1))
+    card_bounds = (10, max(0, (h * w) // 2 - 1))
     num = unifint(diff_lb, diff_ub, card_bounds)
-    numcols = unifint(diff_lb, diff_ub, (0, min(9, num)))
+    numcols = 1 # unifint(diff_lb, diff_ub, (0, min(9, num)))
     inds = totuple(asindices(c))
     chosinds = sample(inds, num)
     choscols = sample(remcols, numcols)
@@ -594,19 +600,19 @@ def generate_42a50994(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_08ed6ac7(diff_lb: float, diff_ub: float) -> dict:
     colopts = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (4, 30))
-    w = unifint(diff_lb, diff_ub, (4, 30))
-    bgc = choice(difference(colopts, (1, 2, 3, 4)))
+    h = unifint(diff_lb, diff_ub, (10, 20))
+    w = unifint(diff_lb, diff_ub, (10, 20))
+    bgc = 0 # choice(difference(colopts, (1, 2, 3, 4)))
     remcols = remove(bgc, colopts)
     gi = canvas(bgc, (h, w))
     go = canvas(bgc, (h, w))
     barrange = (4, w)
     locopts = interval(0, w, 1)
-    nbars = unifint(diff_lb, diff_ub, barrange)
-    barlocs = sample(locopts, nbars)
+    nbars = w // 2 # unifint(diff_lb, diff_ub, barrange)
+    barlocs = [2 * n + 1 for n in range(nbars)] # sample(locopts, nbars)
     barhopts = interval(0, h, 1)
     barhs = sample(barhopts, 4)
-    barcols = [choice(remcols) for j in range(nbars)]
+    barcols = [5 for j in range(nbars)]
     barhsfx = [choice(barhs) for j in range(nbars - 4)] + list(barhs)
     shuffle(barhsfx)
     ordered = sorted(barhs)
@@ -620,8 +626,8 @@ def generate_08ed6ac7(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_8f2ea7aa(diff_lb: float, diff_ub: float) -> dict:
     colopts = interval(0, 10, 1)
-    d = unifint(diff_lb, diff_ub, (2, 5))
-    bgc = choice(colopts)
+    d = 3 # unifint(diff_lb, diff_ub, (2, 5))
+    bgc = 0 # choice(colopts)
     remcols = remove(bgc, colopts)
     d2 = d ** 2
     gi = canvas(bgc, (d2, d2))
@@ -637,7 +643,7 @@ def generate_8f2ea7aa(diff_lb: float, diff_ub: float) -> dict:
     locs = set(sample(inds, num))
     while shape(locs) != (d, d):
         locs.add(choice(totuple(set(inds) - locs)))
-    ncols = unifint(diff_lb, diff_ub, (1, 9))
+    ncols = 1 # unifint(diff_lb, diff_ub, (1, 9))
     cols = sample(remcols, ncols)
     for ij in locs:
         minig = fill(minig, choice(cols), {ij})
@@ -653,7 +659,7 @@ def generate_8f2ea7aa(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_7fe24cdd(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (1, 15))
+    h = 3 # unifint(diff_lb, diff_ub, (1, 15))
     w = h
     bgc = choice(cols)
     gi = canvas(bgc, (h, w))
@@ -673,12 +679,14 @@ def generate_7fe24cdd(diff_lb: float, diff_ub: float) -> dict:
 
 
 def generate_85c4e7cd(diff_lb: float, diff_ub: float) -> dict:
-    colopts = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (1, 15))
-    w = unifint(diff_lb, diff_ub, (1, 15))
-    ncols = unifint(diff_lb, diff_ub, (1, 10))
+    colopts = interval(1, 10, 1)
+    h = unifint(diff_lb, diff_ub, (3, 7))
+    w = h # unifint(diff_lb, diff_ub, (1, 15))
+    ncols = w # unifint(diff_lb, diff_ub, (1, 10))
     cols = sample(colopts, ncols)
-    colord = [choice(cols) for j in range(min(h, w))]
+    # print(cols)
+    colord = cols # [choice(cols) for j in range(min(h, w))]
+    # print(colord)
     shp = (h*2, w*2)
     gi = canvas(0, shp)
     go = canvas(0, shp)
@@ -693,52 +701,52 @@ def generate_85c4e7cd(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_8e5a5113(diff_lb: float, diff_ub: float) -> dict:
     colopts = interval(0, 10, 1)
-    d = unifint(diff_lb, diff_ub, (2, 9))
-    bgc = choice(colopts)
+    d = 3 # unifint(diff_lb, diff_ub, (2, 9))
+    bgc = 0 # choice(colopts)
     remcols = remove(bgc, colopts)
     k = 4 if d < 7 else 3
     nbound = (2, k)
-    num = unifint(diff_lb, diff_ub, nbound)
-    rotfs = (identity, rot90, rot180, rot270)
-    barc = choice(remcols)
+    num = 3 # unifint(diff_lb, diff_ub, nbound)
+    rotfs = (identity) # (identity, rot90, rot180, rot270)
+    barc = 5 # choice(remcols)
     remcols = remove(barc, remcols)
     colbnds = (1, 8)
-    ncols = unifint(diff_lb, diff_ub, colbnds)
+    ncols = 3 # unifint(diff_lb, diff_ub, colbnds)
     patcols = sample(remcols, ncols)
     bgcanv = canvas(bgc, (d, d))
     c = canvas(bgc, (d, d))
     inds = totuple(asindices(c))
     ncolbnds = (1, d ** 2 - 1)
-    ncells = unifint(diff_lb, diff_ub, ncolbnds)
+    ncells = 9 # unifint(diff_lb, diff_ub, ncolbnds)
     indsss = sample(inds, ncells)
     for ij in indsss:
         c = fill(c, choice(patcols), {ij})
     barr = canvas(barc, (d, 1))
-    fillinidx = choice(interval(0, num, 1))
+    fillinidx = 0 # choice(interval(0, num, 1))
     gi = rot90(rot270(c if fillinidx == 0 else bgcanv))
     go = rot90(rot270(c))
     for j in range(num - 1):
         c = rot90(c)
         gi = hconcat(hconcat(gi, barr), c if j + 1 == fillinidx else bgcanv)
         go = hconcat(hconcat(go, barr), c)
-    if choice((True, False)):
-        gi = rot90(gi)
-        go = rot90(go)
+    # if choice((True, False)):
+    #     gi = rot90(gi)
+    #     go = rot90(go)
     return {'input': gi, 'output': go}
 
 
 def generate_4c4377d9(diff_lb: float, diff_ub: float) -> dict:
-    cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (1, 15))
-    w = unifint(diff_lb, diff_ub, (1, 30))
+    cols = interval(1, 10, 1)
+    h = 3 # unifint(diff_lb, diff_ub, (1, 15))
+    w = 4 # unifint(diff_lb, diff_ub, (1, 30))
     bgc = choice(cols)
     gi = canvas(bgc, (h, w))
     remcols = remove(bgc, cols)
-    numc = unifint(diff_lb, diff_ub, (0, min(9, h * w)))
-    colsch = sample(cols, numc)
+    numc = 1 # unifint(diff_lb, diff_ub, (0, min(9, h * w)))
+    colsch = sample(remcols, numc)
     inds = totuple(asindices(gi))
     for col in colsch:
-        num = unifint(diff_lb, diff_ub, (1, max(1, len(inds) // numc)))
+        num = unifint(diff_lb, diff_ub, (3, 5)) # max(1, len(inds) // numc)))
         chos = sample(inds, num)
         gi = fill(gi, col, chos)
         inds = difference(inds, chos)
@@ -748,8 +756,8 @@ def generate_4c4377d9(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_a65b410d(diff_lb: float, diff_ub: float) -> dict:
     colopts = difference(interval(0, 10, 1), (1, 3))
-    h = unifint(diff_lb, diff_ub, (3, 30))
-    w = unifint(diff_lb, diff_ub, (3, 30))
+    h = unifint(diff_lb, diff_ub, (5, 12))
+    w = unifint(diff_lb, diff_ub, (5, 12))
     mpi = h // 2
     mpj = w // 2
     devi = unifint(diff_lb, diff_ub, (0, mpi))
@@ -763,8 +771,8 @@ def generate_a65b410d(diff_lb: float, diff_ub: float) -> dict:
     loci = max(min(h - 2, loci), 1)
     locj = max(min(w - 2, locj), 1)
     loc = (loci, locj)
-    bgc = choice(colopts)
-    linc = choice(remove(bgc, colopts))
+    bgc = 0 # choice(colopts)
+    linc = 2 # choice(remove(bgc, colopts))
     gi = canvas(bgc, (h, w))
     gi = fill(gi, linc, connect((loci, 0), (loci, locj)))
     blues = shoot((loci + 1, locj - 1), (1, -1))
@@ -774,7 +782,7 @@ def generate_a65b410d(diff_lb: float, diff_ub: float) -> dict:
     greens = mapply(f, greens)
     go = fill(gi, 1, blues)
     go = fill(go, 3, greens)
-    rotf = choice((identity, rot90, rot180, rot270))
+    rotf = identity # choice((identity, rot90, rot180, rot270))
     gi = rotf(gi)
     go = rotf(go)
     return {'input': gi, 'output': go}
@@ -782,21 +790,21 @@ def generate_a65b410d(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_5168d44c(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (7, 30))
-    w = unifint(diff_lb, diff_ub, (7, 30))
-    doth = unifint(diff_lb, diff_ub, (1, h//3))
-    dotw = unifint(diff_lb, diff_ub, (1, w//3))
-    borderh = unifint(diff_lb, diff_ub, (1, h//4))
-    borderw = unifint(diff_lb, diff_ub, (1, w//4))
-    direc = choice((DOWN, RIGHT, UNITY))
+    h = unifint(diff_lb, diff_ub, (7, 20))
+    w = unifint(diff_lb, diff_ub, (7, 20))
+    doth = 1 # unifint(diff_lb, diff_ub, (1, h//3))
+    dotw = 1 # unifint(diff_lb, diff_ub, (1, w//3))
+    borderh = 1 # unifint(diff_lb, diff_ub, (1, h//4))
+    borderw = 1 # unifint(diff_lb, diff_ub, (1, w//4))
+    direc = choice((DOWN, RIGHT)) # , UNITY))
     dotloci = randint(0, h - doth - 1 if direc == RIGHT else h - doth - borderh - 1)
     dotlocj = randint(0, w - dotw - 1 if direc == DOWN else w - dotw - borderw - 1)
     dotloc = (dotloci, dotlocj)
-    bgc = choice(cols)
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
-    dotcol = choice(remcols)
+    dotcol = 3 # choice(remcols)
     remcols = remove(dotcol, remcols)
-    boxcol = choice(remcols)
+    boxcol = 2 # choice(remcols)
     gi = canvas(bgc, (h, w))
     dotshap = (doth, dotw)
     starterdot = backdrop(frozenset({dotloc, add(dotloc, decrement(dotshap))}))
@@ -819,14 +827,14 @@ def generate_5168d44c(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_a9f96cdd(diff_lb: float, diff_ub: float) -> dict:
     cols = difference(interval(0, 10, 1), (3, 6, 7, 8))
-    h = unifint(diff_lb, diff_ub, (3, 30))
-    w = unifint(diff_lb, diff_ub, (3, 30))
-    bgc = choice(cols)
-    fgc = choice(remove(bgc, cols))
+    h = unifint(diff_lb, diff_ub, (3, 7))
+    w = unifint(diff_lb, diff_ub, (3, 7))
+    bgc = 0 # choice(cols)
+    fgc = 2 # choice(remove(bgc, cols))
     gi = canvas(bgc, (h, w))
     go = canvas(bgc, (h, w))
     locs = asindices(gi)
-    noccs = unifint(diff_lb, diff_ub, (1, max(1, (h * w) // 10)))
+    noccs = 1 # unifint(diff_lb, diff_ub, (1, max(1, (h * w) // 10)))
     for k in range(noccs):
         if len(locs) == 0:
             break
@@ -843,12 +851,12 @@ def generate_a9f96cdd(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_9172f3a0(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (1, 10))
-    w = unifint(diff_lb, diff_ub, (1, 10))
-    bgc = choice(cols)
+    h = 3 # unifint(diff_lb, diff_ub, (1, 10))
+    w = 3 # unifint(diff_lb, diff_ub, (1, 10))
+    bgc = 0 # choice(cols)
     gi = canvas(bgc, (h, w))
     remcols = remove(bgc, cols)
-    numc = unifint(diff_lb, diff_ub, (0, min(9, h * w)))
+    numc = unifint(diff_lb, diff_ub, (1, 4)) # min(9, h * w)))
     colsch = sample(remcols, numc)
     inds = totuple(asindices(gi))
     for col in colsch:
@@ -862,13 +870,13 @@ def generate_9172f3a0(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_67a423a3(diff_lb: float, diff_ub: float) -> dict:
     cols = remove(4, interval(0, 10, 1))
-    h = unifint(diff_lb, diff_ub, (3, 30))
-    w = unifint(diff_lb, diff_ub, (3, 30))
-    bgc = choice(cols)
+    h = unifint(diff_lb, diff_ub, (3, 12))
+    w = h # unifint(diff_lb, diff_ub, (3, 30))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     gi = canvas(bgc, (h, w))
-    lineh = unifint(diff_lb, diff_ub, (1, h // 3))
-    linew = unifint(diff_lb, diff_ub, (1, w // 3))
+    lineh = 1 # unifint(diff_lb, diff_ub, (1, h // 3))
+    linew = 1 # unifint(diff_lb, diff_ub, (1, w // 3))
     loci = randint(1, h - lineh - 1)
     locj = randint(1, w - linew - 1)
     acol = choice(remcols)
@@ -887,12 +895,12 @@ def generate_67a423a3(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_db3e9e38(diff_lb: float, diff_ub: float) -> dict:
     cols = remove(8, interval(0, 10, 1))
-    h = unifint(diff_lb, diff_ub, (3, 30))
-    w = unifint(diff_lb, diff_ub, (3, 30))
-    bgc = choice(cols)
+    h = unifint(diff_lb, diff_ub, (5, 15))
+    w = unifint(diff_lb, diff_ub, (6, 15))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
-    fgc = choice(remcols)
-    barth = unifint(diff_lb, diff_ub, (1, max(1, w // 5)))
+    fgc = 7 # choice(remcols)
+    barth = 1 # unifint(diff_lb, diff_ub, (1, max(1, w // 5)))
     loci = unifint(diff_lb, diff_ub, (1, h - 2))
     locj = randint(1, w - barth - 1)
     bar = backdrop(frozenset({(loci, locj), (0, locj + barth - 1)}))
@@ -908,7 +916,7 @@ def generate_db3e9e38(diff_lb: float, diff_ub: float) -> dict:
         go = fill(go, 8, shift(bar, rsh))
         lsh = multiply(2 * k + 1, (-1, -barth))
         go = fill(go, 8, shift(bar, lsh))
-    rotf = choice((identity, rot90, rot180, rot270))
+    rotf = identity # choice((identity, rot90, rot180, rot270))
     gi = rotf(gi)
     go = rotf(go)
     return {'input': gi, 'output': go}
@@ -916,15 +924,15 @@ def generate_db3e9e38(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_9dfd6313(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    dh = unifint(diff_lb, diff_ub, (1, 14))
-    d = 2 * dh + 1
-    bgc = choice(cols)
+    dh = unifint(diff_lb, diff_ub, (3, 6))
+    d = dh # 2 * dh + 1
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
-    linc = choice(remcols)
+    linc = 5 # choice(remcols)
     remcols = remove(linc, remcols)
     gi = canvas(bgc, (d, d))
     inds = asindices(gi)
-    lni = randint(1, 4)
+    lni = 3 # randint(1, 4)
     if lni == 1:
         ln = connect((dh, 0), (dh, d - 1))
         mirrf = hmirror
@@ -943,7 +951,7 @@ def generate_9dfd6313(diff_lb: float, diff_ub: float) -> dict:
         cands = sfilter(inds, lambda ij: (ij[0] + ij[1]) > d)
     gi = fill(gi, linc, ln)
     mp = (d * (d - 1)) // 2
-    numcols = unifint(diff_lb, diff_ub, (1, min(7, mp)))
+    numcols = unifint(diff_lb, diff_ub, (1, 3)) # min(7, mp)))
     colsch = sample(remcols, numcols)
     numpix = unifint(diff_lb, diff_ub, (1, len(cands)))
     pixs = sample(totuple(cands), numpix)
@@ -956,9 +964,9 @@ def generate_9dfd6313(diff_lb: float, diff_ub: float) -> dict:
 
 
 def generate_746b3537(diff_lb: float, diff_ub: float) -> dict:
-    fullcols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (2, 15))
-    w = unifint(diff_lb, diff_ub, (1, 30))
+    fullcols = interval(1, 10, 1)
+    h = unifint(diff_lb, diff_ub, (2, 5))
+    w = unifint(diff_lb, diff_ub, (1, 10))
     cols = []
     lastc = -1
     for k in range(h):
@@ -967,7 +975,7 @@ def generate_746b3537(diff_lb: float, diff_ub: float) -> dict:
         lastc = c
     go = tuple((c,) for c in cols)
     gi = tuple(repeat(c, w) for c in cols)
-    numinserts = unifint(diff_lb, diff_ub, (1, 30 - h))
+    numinserts = unifint(diff_lb, diff_ub, (1, 3)) # 0 - h))
     for k in range(numinserts):
         loc = randint(0, len(gi) - 1)
         gi = gi[:loc+1] + gi[loc:]
@@ -979,11 +987,11 @@ def generate_746b3537(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_75b8110e(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (2, 15))
-    w = unifint(diff_lb, diff_ub, (2, 15))
-    bgc = choice(cols)
+    h = 4 # unifint(diff_lb, diff_ub, (2, 15))
+    w = 4 # unifint(diff_lb, diff_ub, (2, 15))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
-    c1, c2, c3, c4 = sample(remcols, 4)
+    c1, c2, c3, c4 = (4, 5, 6, 9) # sample(remcols, 4)
     canv = canvas(bgc, (h, w))
     cels = totuple(asindices(canv))
     mp = (h * w) // 2
@@ -1010,13 +1018,13 @@ def generate_75b8110e(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_1cf80156(diff_lb: float, diff_ub: float) -> dict:
     colopts = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (3, 30))
-    w = unifint(diff_lb, diff_ub, (3, 30))
-    bgc = choice(colopts)
+    h = unifint(diff_lb, diff_ub, (8, 20))
+    w = unifint(diff_lb, diff_ub, (8, 20))
+    bgc = 0 # choice(colopts)
     fgc = choice(remove(bgc, colopts))
     gi = canvas(bgc, (h, w))
-    hb = unifint(diff_lb, diff_ub, (1, min(15, h - 1)))
-    wb = unifint(diff_lb, diff_ub, (1, min(15, w - 1)))
+    hb = unifint(diff_lb, diff_ub, (3, 5)) # min(15, h - 1)))
+    wb = unifint(diff_lb, diff_ub, (3, 5)) # min(15, w - 1)))
     bounds = asindices(canvas(0, (hb, wb)))
     shp = {choice(totuple(corners(bounds)))}
     mp = (hb * wb) // 2
@@ -1036,13 +1044,13 @@ def generate_1cf80156(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_28bf18c6(diff_lb: float, diff_ub: float) -> dict:
     colopts = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (3, 30))
-    w = unifint(diff_lb, diff_ub, (3, 30))
-    bgc = choice(colopts)
+    h = unifint(diff_lb, diff_ub, (8, 20))
+    w = unifint(diff_lb, diff_ub, (8, 20))
+    bgc = 0 # choice(colopts)
     fgc = choice(remove(bgc, colopts))
     gi = canvas(bgc, (h, w))
-    hb = unifint(diff_lb, diff_ub, (1, min(14, h - 1)))
-    wb = unifint(diff_lb, diff_ub, (1, min(14, w - 1)))
+    hb = unifint(diff_lb, diff_ub, (3, 5)) # min(14, h - 1)))
+    wb = unifint(diff_lb, diff_ub, (3, 5)) # min(14, w - 1)))
     bounds = asindices(canvas(0, (hb, wb)))
     shp = {choice(totuple(corners(bounds)))}
     mp = (hb * wb) // 2
@@ -1064,20 +1072,21 @@ def generate_28bf18c6(diff_lb: float, diff_ub: float) -> dict:
 def generate_22eb0ac0(diff_lb: float, diff_ub: float) -> dict:
     colopts = interval(0, 10, 1)
     gi = canvas(0, (1, 1))
-    h = unifint(diff_lb, diff_ub, (4, 30))
-    w = unifint(diff_lb, diff_ub, (4, 30))
-    bgc = choice(colopts)
+    h = 10 # unifint(diff_lb, diff_ub, (4, 30))
+    w = h # unifint(diff_lb, diff_ub, (4, 30))
+    bgc = 0 # choice(colopts)
     remcols = remove(bgc, colopts)
     gi = canvas(bgc, (h, w))
     go = canvas(bgc, (h, w))
-    nlocs = unifint(diff_lb, diff_ub, (1, h))
-    locs = sample(interval(0, h, 1), nlocs)
-    while set(locs).issubset({0, h - 1}):
-        locs = sample(interval(0, h, 1), nlocs)
-    mp = nlocs // 2
-    nbarsdev = unifint(diff_lb, diff_ub, (0, mp))
-    nbars = choice((nbarsdev, h - nbarsdev))
-    nbars = max(0, min(nbars, nlocs))
+    nlocs = unifint(diff_lb, diff_ub, (1, h // 2))
+    s = choice((0, 1))
+    locs = interval(1, h - s, 2) # sample(interval(0, h, 2), nlocs)
+    # while set(locs).issubset({0, h - 1}):
+    #     locs = sample(interval(0, h, 1), nlocs)
+    # mp = nlocs // 2
+    # nbarsdev = unifint(diff_lb, diff_ub, (0, mp))
+    # nbars = choice((nbarsdev, h - nbarsdev))
+    nbars = choice(range(0, 5)) # max(0, min(nbars, nlocs))
     barlocs = sample(locs, nbars)
     nonbarlocs = difference(locs, barlocs)
     barcols = [choice(remcols) for j in range(nbars)]
@@ -1091,22 +1100,22 @@ def generate_22eb0ac0(diff_lb: float, diff_ub: float) -> dict:
         go = fill(go, a, {(loc, 0)})
         gi = fill(gi, b, {(loc, w - 1)})
         go = fill(go, b, {(loc, w - 1)})
-    if choice((True, False)):
-        gi = dmirror(gi)
-        go = dmirror(go)
+    # if choice((True, False)):
+    #     gi = dmirror(gi)
+    #     go = dmirror(go)
     return {'input': gi, 'output': go}
 
 
 def generate_4258a5f9(diff_lb: float, diff_ub: float) -> dict:
     colopts = remove(1, interval(0, 10, 1))
-    h = unifint(diff_lb, diff_ub, (2, 30))
-    w = unifint(diff_lb, diff_ub, (2, 30))
-    bgc = choice(colopts)
+    h = unifint(diff_lb, diff_ub, (6, 20))
+    w = unifint(diff_lb, diff_ub, (6, 20))
+    bgc = 0 # choice(colopts)
     remcols = remove(bgc, colopts)
-    fgc = choice(remcols)
+    fgc = 5 # choice(remcols)
     gi = canvas(bgc, (h, w))
-    mp = ((h * w) // 2) if (h * w) % 2 == 1 else ((h * w) // 2 - 1)
-    ndots = unifint(diff_lb, diff_ub, (1, mp))
+    # mp = ((h * w) // 2) if (h * w) % 2 == 1 else ((h * w) // 2 - 1)
+    ndots = unifint(diff_lb, diff_ub, (1, 10)) # mp))
     inds = totuple(asindices(gi))
     dots = sample(inds, ndots)
     go = fill(gi, 1, mapply(neighbors, frozenset(dots)))
@@ -1119,10 +1128,10 @@ def generate_1e0a9b12(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
     ff = chain(dmirror, lbind(apply, rbind(order, identity)), dmirror)
     while True:
-        h = unifint(diff_lb, diff_ub, (3, 30))
-        w = unifint(diff_lb, diff_ub, (3, 30))
+        h = unifint(diff_lb, diff_ub, (5, 10))
+        w = h # unifint(diff_lb, diff_ub, (3, 30))
         nc = unifint(diff_lb, diff_ub, (1, w))
-        bgc = choice(cols)
+        bgc = 0 # choice(cols)
         gi = canvas(bgc, (h, w))
         remcols = remove(bgc, cols)
         scols = [choice(remcols) for j in range(nc)]
@@ -1139,9 +1148,9 @@ def generate_1e0a9b12(diff_lb: float, diff_ub: float) -> dict:
 
 
 def generate_9565186b(diff_lb: float, diff_ub: float) -> dict:
-    cols = remove(5, interval(0, 10, 1))
-    h = unifint(diff_lb, diff_ub, (2, 30))
-    w = unifint(diff_lb, diff_ub, (2, 30))
+    cols = remove(5, interval(1, 10, 1))
+    h = 3 # unifint(diff_lb, diff_ub, (2, 30))
+    w = h # unifint(diff_lb, diff_ub, (2, 30))
     wg = canvas(5, (h, w))
     numcols = unifint(diff_lb, diff_ub, (2, min(h * w - 1, 8)))
     mostcol = choice(cols)
@@ -1177,8 +1186,8 @@ def generate_9565186b(diff_lb: float, diff_ub: float) -> dict:
 
 
 def generate_6e02f1e3(diff_lb: float, diff_ub: float) -> dict:
-    cols = interval(0, 10, 1)
-    d = unifint(diff_lb, diff_ub, (3, 30))
+    cols = interval(1, 10, 1)
+    d = 3 # unifint(diff_lb, diff_ub, (3, 30))
     c = canvas(0, (d, d))
     inds = list(asindices(c))
     shuffle(inds)
@@ -1217,32 +1226,33 @@ def generate_6e02f1e3(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_2dc579da(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (3, 30))
-    w = unifint(diff_lb, diff_ub, (3, 30))
+    h = unifint(diff_lb, diff_ub, (5, 15))
+    if even(h): h = h + 1 
+    w = h # unifint(diff_lb, diff_ub, (5, 30))
     bgc = choice(cols)
     remcols = remove(bgc, cols)
     linc = choice(remcols)
     remcols = remove(linc, remcols)
     dotc = choice(remcols)
     hdev = unifint(diff_lb, diff_ub, (0, (h - 2) // 2))
-    lineh = choice((hdev, h - 2 - hdev))
-    lineh = max(min(h - 2, lineh), 1)
+    # lineh = choice((hdev, h - 2 - hdev))
+    lineh = 1 # max(min(h - 2, lineh), 1)
     wdev = unifint(diff_lb, diff_ub, (0, (w - 2) // 2))
-    linew = choice((wdev, w - 2 - wdev))
-    linew = max(min(w - 2, linew), 1)
-    locidev = unifint(diff_lb, diff_ub, (1, h // 2))
-    loci = choice((h // 2 - locidev, h // 2 + locidev))
-    loci = min(max(1, loci), h - lineh - 1)
-    locjdev = unifint(diff_lb, diff_ub, (1, w // 2))
-    locj = choice((w // 2 - locjdev, w // 2 + locjdev))
-    locj = min(max(1, locj), w - linew - 1)
+    # linew = choice((wdev, w - 2 - wdev))
+    linew = 1 # max(min(w - 2, linew), 1)
+    # locidev = unifint(diff_lb, diff_ub, (1, h // 2))
+    # loci = choice((h // 2 - locidev, h // 2 + locidev))
+    loci = h // 2 # min(max(1, loci), h - lineh - 1)
+    # locjdev = unifint(diff_lb, diff_ub, (1, w // 2))
+    # locj = choice((w // 2 - locjdev, w // 2 + locjdev))
+    locj = h // 2 # min(max(1, locj), w - linew - 1)
     gi = canvas(bgc, (h, w))
     for a in range(loci, loci + lineh):
         gi = fill(gi, linc, connect((a, 0), (a, w - 1)))
     for b in range(locj, locj + linew):
         gi = fill(gi, linc, connect((0, b), (h - 1, b)))
-    doth = randint(1, loci)
-    dotw = randint(1, locj)
+    doth = 1 # randint(1, loci)
+    dotw = 1 # randint(1, locj)
     dotloci = randint(0, loci - doth)
     dotlocj = randint(0, locj - dotw)
     dot = backdrop(frozenset({(dotloci, dotlocj), (dotloci + doth - 1, dotlocj + dotw - 1)}))
@@ -1257,8 +1267,8 @@ def generate_2dc579da(diff_lb: float, diff_ub: float) -> dict:
 def generate_2dee498d(diff_lb: float, diff_ub: float) -> dict:
     dim_bounds = (1, 30)
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (1, 30))
-    w = unifint(diff_lb, diff_ub, (1, 10))
+    h = unifint(diff_lb, diff_ub, (2, 5))
+    w = unifint(diff_lb, diff_ub, (2, 5))
     bgc = choice(cols)
     go = canvas(bgc, (h, w))
     remcols = remove(bgc, cols)
@@ -1276,15 +1286,15 @@ def generate_2dee498d(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_508bd3b6(diff_lb: float, diff_ub: float) -> dict:
     cols = remove(3, interval(0, 10, 1))
-    h = unifint(diff_lb, diff_ub, (5, 30))
-    w = unifint(diff_lb, diff_ub, (h, 30))
+    h = 12 # unifint(diff_lb, diff_ub, (5, 30))
+    w = 12 # unifint(diff_lb, diff_ub, (h, 30))
     barh = unifint(diff_lb, diff_ub, (1, h // 2))
-    barloci = unifint(diff_lb, diff_ub, (2, h - barh))
-    bgc = choice(cols)
+    barloci = h - barh # unifint(diff_lb, diff_ub, (2, h - barh))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
-    barc = choice(remcols)
+    barc = 2 # choice(remcols)
     remcols = remove(barc, remcols)
-    linc = choice(remcols)
+    linc = 8 # choice(remcols)
     gi = canvas(bgc, (h, w))
     for j in range(barloci, barloci + barh):
         gi = fill(gi, barc, connect((j, 0), (j, w - 1)))
@@ -1316,12 +1326,12 @@ def generate_508bd3b6(diff_lb: float, diff_ub: float) -> dict:
 def generate_88a62173(diff_lb: float, diff_ub: float) -> dict:
     dim_bounds = (1, 30)
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (1, 14))
-    w = unifint(diff_lb, diff_ub, (1, 14))
-    bgc = choice(cols)
+    h = 2 # unifint(diff_lb, diff_ub, (1, 14))
+    w = 2 # unifint(diff_lb, diff_ub, (1, 14))
+    bgc = 0 # choice(cols)
     gib = canvas(bgc, (h, w))
     remcols = remove(bgc, cols)
-    numc = unifint(diff_lb, diff_ub, (1, min(9, h * w)))
+    numc = 1 # unifint(diff_lb, diff_ub, (1, min(9, h * w)))
     colsch = sample(remcols, numc)
     inds = totuple(asindices(gib))
     for col in colsch:
@@ -1351,9 +1361,9 @@ def generate_88a62173(diff_lb: float, diff_ub: float) -> dict:
 def generate_3aa6fb7a(diff_lb: float, diff_ub: float) -> dict:
     base = (ORIGIN, RIGHT, DOWN, UNITY)
     cols = remove(1, interval(0, 10, 1))
-    h = unifint(diff_lb, diff_ub, (3, 30))
-    w = unifint(diff_lb, diff_ub, (3, 30))
-    bgc = choice(cols)
+    h = 7 # unifint(diff_lb, diff_ub, (3, 30))
+    w = 7 # unifint(diff_lb, diff_ub, (3, 30))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     fgc = choice(remcols)
     gi = canvas(bgc, (h, w))
@@ -1380,9 +1390,9 @@ def generate_3aa6fb7a(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_3ac3eb23(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (3, 30))
-    w = unifint(diff_lb, diff_ub, (3, 30))
-    bgc = choice(cols)
+    h = 6 # unifint(diff_lb, diff_ub, (3, 30))
+    w = unifint(diff_lb, diff_ub, (6, 12))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     nlocs = unifint(diff_lb, diff_ub, (1, max(1, (w - 2) // 3)))
     locopts = interval(1, w - 1, 1)
@@ -1398,7 +1408,7 @@ def generate_3ac3eb23(diff_lb: float, diff_ub: float) -> dict:
         go = fill(go, col, {(p, locj) for p in interval(0, h, 2)})
         go = fill(go, col, {(p, locj - 1) for p in interval(1, h, 2)})
         go = fill(go, col, {(p, locj + 1) for p in interval(1, h, 2)})
-    mf = choice((identity, rot90, rot180, rot270))
+    mf = identity # choice((identity, rot90, rot180, rot270))
     gi = mf(gi)
     go = mf(go)
     return {'input': gi, 'output': go}
@@ -1406,11 +1416,11 @@ def generate_3ac3eb23(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_c3e719e8(diff_lb: float, diff_ub: float) -> dict:
     cols = remove(0, interval(0, 10, 1))
-    h = unifint(diff_lb, diff_ub, (2, 5))
-    w = unifint(diff_lb, diff_ub, (2, 5))
+    h = 3 # unifint(diff_lb, diff_ub, (2, 5))
+    w = 3 # unifint(diff_lb, diff_ub, (2, 5))
     gob = canvas(-1, (h**2, w**2))
     wg = canvas(-1, (h, w))
-    ncols = unifint(diff_lb, diff_ub, (1, min(h * w - 1, 8)))
+    ncols = unifint(diff_lb, diff_ub, (2, min(h * w - 1, 8)))
     nmc = randint(max(1, (h * w) // (ncols + 1) + 1), h * w)
     inds = totuple(asindices(wg))
     mc = choice(cols)
@@ -1439,11 +1449,11 @@ def generate_c3e719e8(diff_lb: float, diff_ub: float) -> dict:
 def generate_29c11459(diff_lb: float, diff_ub: float) -> dict:
     colopts = remove(5, interval(0, 10, 1))
     gi = canvas(0, (1, 1))
-    h = unifint(diff_lb, diff_ub, (5, 30))
-    w = unifint(diff_lb, diff_ub, (5, 29))
+    h = 5 # unifint(diff_lb, diff_ub, (5, 30))
+    w = 11 # unifint(diff_lb, diff_ub, (5, 29))
     if w % 2 == 0:
         w = choice((max(5, w - 1), min(29, w + 1)))
-    bgc = choice(colopts)
+    bgc = 0 # choice(colopts)
     remcols = remove(bgc, colopts)
     ncols = unifint(diff_lb, diff_ub, (2, len(remcols)))
     ccols = sample(remcols, ncols)
@@ -1470,17 +1480,17 @@ def generate_29c11459(diff_lb: float, diff_ub: float) -> dict:
         go = fill(go, a, connect((loc, 0), (loc, w // 2 - 1)))
         go = fill(go, b, connect((loc, w // 2 + 1), (loc, w - 1)))
         go = fill(go, 5, {(loc, w // 2)})
-    if choice((True, False)):
-        gi = dmirror(gi)
-        go = dmirror(go)
+    # if choice((True, False)):
+    #     gi = dmirror(gi)
+    #     go = dmirror(go)
     return {'input': gi, 'output': go}
 
 
 def generate_23b5c85d(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (5, 30))
-    w = unifint(diff_lb, diff_ub, (5, 30))
-    bgc = choice(cols)
+    h = unifint(diff_lb, diff_ub, (10, 20))
+    w = unifint(diff_lb, diff_ub, (10, 20))
+    bgc = 0 # choice(cols)
     colopts = remove(bgc, cols)
     gi = canvas(bgc, (h, w))
     oh = unifint(diff_lb, diff_ub, (2, h - 1))
@@ -1509,19 +1519,19 @@ def generate_23b5c85d(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_1bfc4729(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (4, 30))
-    w = unifint(diff_lb, diff_ub, (4, 30))
-    if h % 2 == 1:
-        h = choice((max(4, h - 1), min(30, h + 1)))
-    alocj = unifint(diff_lb, diff_ub, (w // 2, w - 1))
-    if choice((True, False)):
-        alocj = max(min(w // 2, alocj - w // 2), 1)
-    aloci = randint(1, h // 2 - 1)
-    blocj = unifint(diff_lb, diff_ub, (w // 2, w - 1))
-    if choice((True, False)):
-        blocj = max(min(w // 2, blocj - w // 2), 1)
-    bloci = randint(h // 2, h - 2)
-    bgc = choice(cols)
+    h = 10 # unifint(diff_lb, diff_ub, (4, 30))
+    w = h # unifint(diff_lb, diff_ub, (4, 30))
+    # if h % 2 == 1:
+    #     h = choice((max(4, h - 1), min(30, h + 1)))
+    alocj = unifint(diff_lb, diff_ub, (0, w - 1)) # (w // 2, w - 1))
+    # if choice((True, False)):
+    #     alocj = max(min(w // 2, alocj - w // 2), 1)
+    aloci = 2 # randint(1, h // 2 - 1)
+    blocj = unifint(diff_lb, diff_ub, (0, w - 1)) # (w // 2, w - 1))
+    # if choice((True, False)):
+    #     blocj = max(min(w // 2, blocj - w // 2), 1)
+    bloci = h - 3 # randint(h // 2, h - 2)
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     acol = choice(remcols)
     remcols = remove(acol, remcols)
@@ -1544,9 +1554,10 @@ def generate_1bfc4729(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_47c1f68c(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(1, 10, 1)
-    h = unifint(diff_lb, diff_ub, (2, 14))
-    w = unifint(diff_lb, diff_ub, (2, 14))
-    bgc, linc = sample(cols, 2)
+    h = unifint(diff_lb, diff_ub, (3, 8))
+    w = h # unifint(diff_lb, diff_ub, (2, 14))
+    bgc = 0
+    linc = choice(cols)
     remcols = difference(cols, (bgc, linc))
     objc = choice(remcols)
     canv = canvas(bgc, (h, w))
@@ -1575,9 +1586,9 @@ def generate_47c1f68c(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_178fcbfb(diff_lb: float, diff_ub: float) -> dict:
     cols = difference(interval(0, 10, 1), (1, 2, 3))
-    h = unifint(diff_lb, diff_ub, (3, 30))
-    w = unifint(diff_lb, diff_ub, (3, 30))
-    bgc = choice(cols)
+    h = unifint(diff_lb, diff_ub, (8, 15))
+    w = unifint(diff_lb, diff_ub, (8, 15))
+    bgc = 0 # choice(cols)
     gi = canvas(bgc, (h, w))
     go = canvas(bgc, (h, w))
     inds = totuple(asindices(gi))
@@ -1585,7 +1596,7 @@ def generate_178fcbfb(diff_lb: float, diff_ub: float) -> dict:
     jforb = set()
     mp = (h * w) // 3
     for col in (2, 1, 3):
-        bnd = unifint(diff_lb, diff_ub, (1, w if col == 2 else h // 2))
+        bnd = unifint(diff_lb, diff_ub, (1, 2)) # w if col == 2 else h // 2))
         for ndots in range(bnd):
             if col == 2:
                 ij = choice(sfilter(inds, lambda ij: last(ij) not in jforb))
@@ -1601,16 +1612,16 @@ def generate_178fcbfb(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_ae4f1146(diff_lb: float, diff_ub: float) -> dict:
     cols = remove(1, interval(0, 10, 1))
-    bgc = choice(cols)
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
-    fgc = choice(remcols)
-    h = unifint(diff_lb, diff_ub, (6, 30))
-    w = unifint(diff_lb, diff_ub, (6, 30))
-    dh = unifint(diff_lb, diff_ub, (2, h // 3))
-    dw = unifint(diff_lb, diff_ub, (2, w // 3))
-    num = unifint(diff_lb, diff_ub, (1, (h * w) // (2 * dh * dw)))
+    fgc = 8 # choice(remcols)
+    h = 9 # unifint(diff_lb, diff_ub, (6, 30))
+    w = h # unifint(diff_lb, diff_ub, (6, 30))
+    dh = 3 # unifint(diff_lb, diff_ub, (2, h // 3))
+    dw = dh # unifint(diff_lb, diff_ub, (2, w // 3))
+    num = 4 # unifint(diff_lb, diff_ub, (1, (h * w) // (2 * dh * dw)))
     cards = interval(0, dh * dw, 1)
-    ccards = sorted(sample(cards, min(num, len(cards))))
+    ccards = sorted(sample(cards, num)) # min(num, len(cards))))
     sgs = []
     c1 = canvas(fgc, (dh, dw))
     inds = totuple(asindices(c1))
@@ -1619,33 +1630,51 @@ def generate_ae4f1146(diff_lb: float, diff_ub: float) -> dict:
         x1 = fill(c1, 1, x)
         sgs.append(asobject(x1))
     go = paint(c1, sgs[-1])
+    shuffle(sgs)
     gi = canvas(bgc, (h, w))
-    inds2 = asindices(canvas(bgc, (h - dh, w - dw)))
-    maxtr = 10
-    for sg in sgs[::-1]:
-        if len(inds2) == 0:
-            break
-        loc = choice(totuple(inds2))
-        plcd = shift(sg, loc)
-        tr = 0    
-        while (not toindices(plcd).issubset(inds2)) and tr < maxtr:
-            loc = choice(totuple(inds2))
-            plcd = shift(sg, loc)
-            tr += 1
-        if tr < maxtr:
-            inds2 = difference(inds2, toindices(plcd) | outbox(plcd))
-            gi = paint(gi, plcd)
+    # NOTE: the following is of course terrible code but right now I don't feel like fixing it
+    # this is also missing the two edge cases one is shown in the test output
+    inds0 = asindices(canvas(bgc, (3, 3)))
+    loc0 = choice(totuple(inds0))
+    plcd = shift(sgs[0], loc0)
+    gi = paint(gi, plcd)
+    inds1 = asindices(canvas(bgc, (3, 3 - loc0[1])))
+    loc1 = choice(totuple(inds1))
+    plcd = shift(sgs[1], (loc1[0], loc0[1] + loc1[1] + 4))
+    gi = paint(gi, plcd)
+    inds2 = asindices(canvas(bgc, (3 - loc0[0], 3)))
+    loc2 = choice(totuple(inds2))
+    plcd = shift(sgs[2], (loc2[0] + loc0[0] + 4, loc2[1]))
+    gi = paint(gi, plcd)
+    inds3 = asindices(canvas(bgc, (3 - loc1[0], 3 - loc2[1])))
+    loc3 = choice(totuple(inds3))
+    plcd = shift(sgs[3], (loc3[0] + loc1[0] + 4, loc3[1] + loc2[1] + 4))
+    gi = paint(gi, plcd)
+    # maxtr = 10
+    # for sg in sgs[::-1]:
+    #     if len(inds2) == 0:
+    #         break
+    #     loc = choice(totuple(inds2))
+    #     plcd = shift(sg, loc)
+    #     tr = 0    
+    #     while (not toindices(plcd).issubset(inds2)) and tr < maxtr:
+    #         loc = choice(totuple(inds2))
+    #         plcd = shift(sg, loc)
+    #         tr += 1
+    #     if tr < maxtr:
+    #         inds2 = difference(inds2, toindices(plcd) | outbox(plcd))
+    #         gi = paint(gi, plcd)
     return {'input': gi, 'output': go}
 
 
 def generate_3de23699(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (5, 30))
-    w = unifint(diff_lb, diff_ub, (5, 30))
-    bgc = choice(cols)
+    h = unifint(diff_lb, diff_ub, (7, 20))
+    w = unifint(diff_lb, diff_ub, (7, 20))
+    bgc = 0 # choice(cols)
     c = canvas(bgc, (h, w))
-    hi = unifint(diff_lb, diff_ub, (4, h))
-    wi = unifint(diff_lb, diff_ub, (4, w))
+    hi = unifint(diff_lb, diff_ub, (4, h - 1))
+    wi = unifint(diff_lb, diff_ub, (4, w - 1))
     loci = randint(0, h - hi)
     locj = randint(0, w - wi)
     remcols = remove(bgc, cols)
@@ -1668,20 +1697,20 @@ def generate_3de23699(diff_lb: float, diff_ub: float) -> dict:
 def generate_7ddcd7ec(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
     crns = (((0, 0), (-1, -1)), ((0, 1), (-1, 1)), ((1, 0), (1, -1)), ((1, 1), (1, 1)))
-    h = unifint(diff_lb, diff_ub, (5, 30))
-    w = unifint(diff_lb, diff_ub, (5, 30))
-    bgc = choice(cols)
+    h = unifint(diff_lb, diff_ub, (5, 20))
+    w = unifint(diff_lb, diff_ub, (5, 20))
+    bgc = 0 # choice(cols)
     gi = canvas(bgc, (h, w))
     go = canvas(bgc, (h, w))
-    num = unifint(diff_lb, diff_ub, (0, 4))
+    num = unifint(diff_lb, diff_ub, (1, 4))
     chos = sample(crns, num)
     loci = randint(0, h - 2)
     locj = randint(0, w - 2)
     loc = (loci, locj)
     remcols = remove(bgc, cols)
+    col = choice(remcols)
     for sp, dr in crns:
         sp2 = add(loc, sp)
-        col = choice(remcols)
         gi = fill(gi, col, {sp2})
         go = fill(go, col, {sp2})
         if (sp, dr) in chos:
@@ -1692,23 +1721,23 @@ def generate_7ddcd7ec(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_5c2c9af4(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (5, 30))
-    w = unifint(diff_lb, diff_ub, (5, 30))
+    h = unifint(diff_lb, diff_ub, (10, 30))
+    w = h # unifint(diff_lb, diff_ub, (10, 30))
     boxhd = unifint(diff_lb, diff_ub, (0, h // 2))
-    boxwd = unifint(diff_lb, diff_ub, (0, w // 2))
+    # boxwd = unifint(diff_lb, diff_ub, (0, w // 2))
     boxh = choice((boxhd, h - boxhd))
-    boxw = choice((boxwd, w - boxwd))
+    boxw = boxh # choice((boxwd, w - boxwd))
     if boxh % 2 == 0:
         boxh = choice((boxh - 1, boxh + 1))
     if boxw % 2 == 0:
-        boxw = choice((boxw - 1, boxw + 1))
+        boxw = boxh # choice((boxw - 1, boxw + 1))
     boxh = min(max(1, boxh), h if h % 2 == 1 else h - 1)
     boxw = min(max(1, boxw), w if w % 2 == 1 else w - 1)
     boxshap = (boxh, boxw)
     loci = randint(0, h - boxh)
     locj = randint(0, w - boxw)
     loc = (loci, locj)
-    bgc = choice(cols)
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     fgc = choice(remcols)
     c = canvas(bgc, (h, w))
@@ -1743,16 +1772,17 @@ def generate_5c2c9af4(diff_lb: float, diff_ub: float) -> dict:
         go = go2
         k += 1
     if choice((True, False)):
-        gi = dmirror(gi)
-        go = dmirror(go)
+        # NOTE: dmirror leads to the same diagonal used, we want to h or vmirror actually
+        gi = hmirror(gi)
+        go = hmirror(go)
     return {'input': gi, 'output': go}
 
 
 def generate_0b148d64(diff_lb: float, diff_ub: float) -> dict:
     itv = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (7, 30))
-    w = unifint(diff_lb, diff_ub, (7, 30))
-    bgc = choice(itv)
+    h = unifint(diff_lb, diff_ub, (12, 30))
+    w = unifint(diff_lb, diff_ub, (12, 30))
+    bgc = 0 # choice(itv)
     remitv = remove(bgc, itv)
     g = canvas(bgc, (h, w))
     x = randint(3, h - 3)
@@ -1786,13 +1816,13 @@ def generate_0b148d64(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_beb8660c(diff_lb: float, diff_ub: float) -> dict:
     cols = remove(8, interval(0, 10, 1))
-    w = unifint(diff_lb, diff_ub, (3, 30))
-    h = unifint(diff_lb, diff_ub, (w, 30))
-    bgc = choice(cols)
+    w = unifint(diff_lb, diff_ub, (2, 9))
+    h = unifint(diff_lb, diff_ub, (w, 12))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     gi = canvas(bgc, (h, w))
-    k = min(8, w - 1)
-    k = unifint(diff_lb, diff_ub, (1, k))
+    # k = min(8, w - 1)
+    k = w - 1 # unifint(diff_lb, diff_ub, (1, k))
     co = sample(remcols, k)
     wds = sorted(sample(interval(1, w, 1), k))
     for j, (c, l) in enumerate(zip(co, wds)):
@@ -1810,7 +1840,7 @@ def generate_beb8660c(diff_lb: float, diff_ub: float) -> dict:
         ofs = randint(0, nbc)
         gif = gif + (r[-ofs:] + r[:-ofs],)
     gi = vmirror(gif)
-    rotf = choice((identity, rot90, rot180, rot270))
+    rotf = identity # choice((identity, rot90, rot180, rot270))
     gi = rotf(gi)
     go = rotf(go)
     return {'input': gi, 'output': go}
@@ -1818,12 +1848,12 @@ def generate_beb8660c(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_8d510a79(diff_lb: float, diff_ub: float) -> dict:
     cols = difference(interval(0, 10, 1), (1, 2))
-    h = unifint(diff_lb, diff_ub, (5, 30))
-    w = unifint(diff_lb, diff_ub, (3, 30))
+    h = unifint(diff_lb, diff_ub, (5, 20))
+    w = unifint(diff_lb, diff_ub, (8, 15))
     barloci = randint(2, h - 3)
-    bgc = choice(cols)
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
-    barcol = choice(remcols)
+    barcol = 5 # choice(remcols)
     gi = canvas(bgc, (h, w))
     bar = connect((barloci, 0), (barloci, w - 1))
     gi = fill(gi, barcol, bar)
@@ -1851,17 +1881,17 @@ def generate_8d510a79(diff_lb: float, diff_ub: float) -> dict:
             go = fill(go, col, connect(loc, (h - 1, t)))
         else:
             go = fill(go, col, connect(loc, (barloci + 1, t)))
-    if choice((True, False)):
-        gi = dmirror(gi)
-        go = dmirror(go)
+    # if choice((True, False)):
+    #     gi = dmirror(gi)
+    #     go = dmirror(go)
     return {'input': gi, 'output': go}
 
 
 def generate_7468f01a(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (3, 30))
-    w = unifint(diff_lb, diff_ub, (3, 30))
-    bgc = choice(cols)
+    h = unifint(diff_lb, diff_ub, (8, 25))
+    w = unifint(diff_lb, diff_ub, (8, 25))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     sgc, fgc = sample(remcols, 2)
     oh = unifint(diff_lb, diff_ub, (2, max(2, int(h * (2/3)))))
@@ -1883,14 +1913,14 @@ def generate_7468f01a(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_09629e4f(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (2, 5))
-    w = unifint(diff_lb, diff_ub, (2, 5))
+    h = 3 # unifint(diff_lb, diff_ub, (2, 5))
+    w = 3 # unifint(diff_lb, diff_ub, (2, 5))
     nrows, ncolumns = h, w
-    bgc = choice(cols)
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
-    barcol = choice(remcols)
+    barcol = 5 # choice(remcols)
     remcols = remove(barcol, remcols)
-    ncols = unifint(diff_lb, diff_ub, (2, min(7, (h * w) - 2)))
+    ncols = 5 # unifint(diff_lb, diff_ub, (2, min(7, (h * w) - 2)))
     c = canvas(bgc, (h, w))
     inds = totuple(asindices(c))
     fullh, fullw = h * nrows + nrows - 1, w * ncolumns + ncolumns - 1
@@ -1919,9 +1949,9 @@ def generate_09629e4f(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_4347f46a(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)    
-    h = unifint(diff_lb, diff_ub, (10, 30))
-    w = unifint(diff_lb, diff_ub, (10, 30))
-    bgc = choice(cols)
+    h = unifint(diff_lb, diff_ub, (7, 20))
+    w = unifint(diff_lb, diff_ub, (7, 20))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     gi = canvas(bgc, (h, w))
     go = canvas(bgc, (h, w))
@@ -1958,9 +1988,9 @@ def generate_6d58a25d(diff_lb: float, diff_ub: float) -> dict:
     shp = normalize(frozenset({
     (0, 0), (1, 0), (1, 1), (1, -1), (2, -1), (2, -2), (2, 1), (2, 2), (3, 3), (3, -3)
     }))
-    h = unifint(diff_lb, diff_ub, (5, 30))
-    w = unifint(diff_lb, diff_ub, (8, 30))
-    bgc = choice(cols)
+    h = 20 # unifint(diff_lb, diff_ub, (5, 30))
+    w = 20 # unifint(diff_lb, diff_ub, (8, 30))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     c = canvas(bgc, (h, w))
     inds = totuple(asindices(c))
@@ -1970,7 +2000,7 @@ def generate_6d58a25d(diff_lb: float, diff_ub: float) -> dict:
     locj = randint(0, w - 7)
     plcd = shift(shp, (loci, locj))
     rem = difference(inds, plcd)
-    nnoise = unifint(diff_lb, diff_ub, (1, max(1, len(rem) // 2 - 1)))
+    nnoise = unifint(diff_lb, diff_ub, (7, 25)) # max(1, len(rem) // 2 - 1)))
     nois = sample(rem, nnoise)
     gi = fill(c, c2, nois)
     gi = fill(gi, c1, plcd)
@@ -1980,7 +2010,7 @@ def generate_6d58a25d(diff_lb: float, diff_ub: float) -> dict:
     kk = lambda ij: connect((gg(ij), ij[1]), (h - 1, ij[1]))
     fullres = mapply(kk, trg)
     go = fill(gi, c2, fullres)
-    rotf = choice((identity, rot90, rot180, rot270))
+    rotf = identity # choice((identity, rot90, rot180, rot270))
     gi = rotf(gi)
     go = rotf(go)
     return {'input': gi, 'output': go}
@@ -1988,18 +2018,18 @@ def generate_6d58a25d(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_363442ee(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (1, 3))
-    w = unifint(diff_lb, diff_ub, (1, 3))
+    h = 1 # unifint(diff_lb, diff_ub, (1, 3))
+    w = 1 # unifint(diff_lb, diff_ub, (1, 3))
     h = h * 2 + 1
     w = w * 2 + 1
-    nremh = unifint(diff_lb, diff_ub, (2, 30 // h))
-    nremw = unifint(diff_lb, diff_ub, (2, (30 - w - 1) // w))
+    nremh = 3 # unifint(diff_lb, diff_ub, (2, 30 // h))
+    nremw = 3 # unifint(diff_lb, diff_ub, (2, (30 - w - 1) // w))
     rsh = nremh * h
     rsw = nremw * w
     rss = (rsh, rsw)
-    bgc = choice(cols)
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
-    barcol = choice(remcols)
+    barcol = 5 # choice(remcols)
     remcols = remove(barcol, remcols)
     rsi = canvas(bgc, rss)
     rso = canvas(bgc, rss)
@@ -2007,12 +2037,12 @@ def generate_363442ee(diff_lb: float, diff_ub: float) -> dict:
     ulc = canvas(bgc, (h, w))
     bar = canvas(barcol, (nremh * h, 1))
     dotcands = totuple(product(interval(0, rsh, h), interval(0, rsw, w)))
-    dotcol = choice(remcols)
+    dotcol = 1 # choice(remcols)
     dev = unifint(diff_lb, diff_ub, (1, len(dotcands) // 2))
     ndots = choice((dev, len(dotcands) - dev))
     ndots = min(max(1, ndots), len(dotcands))
     dots = sample(dotcands, ndots)
-    nfullremcols = unifint(diff_lb, diff_ub, (1, 8))
+    nfullremcols = unifint(diff_lb, diff_ub, (3, 8))
     fullremcols = sample(remcols, nfullremcols)
     for ij in asindices(ulc):
         ulc = fill(ulc, choice(fullremcols), {ij})
@@ -2023,21 +2053,21 @@ def generate_363442ee(diff_lb: float, diff_ub: float) -> dict:
         rso = paint(rso, shift(ulco, d))
     gi = hconcat(hconcat(vconcat(ulc, ls), bar), rsi)
     go = hconcat(hconcat(vconcat(ulc, ls), bar), rso)
-    mfs = (identity, dmirror, cmirror, vmirror, hmirror, rot90, rot180, rot270)
-    nmfs = choice((1, 2))
-    for fn in sample(mfs, nmfs):
-        gi = fn(gi)
-        go = fn(go)
+    # mfs = (identity, dmirror, cmirror, vmirror, hmirror, rot90, rot180, rot270)
+    # nmfs = choice((1, 2))
+    # for fn in sample(mfs, nmfs):
+    #     gi = fn(gi)
+    #     go = fn(go)
     return {'input': gi, 'output': go}
 
 
 def generate_855e0971(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    nbarsd = unifint(diff_lb, diff_ub, (1, 4))
-    nbars = choice((nbarsd, 11 - nbarsd))
+    # nbarsd = unifint(diff_lb, diff_ub, (1, 4))
+    nbars = choice((2, 4)) # (nbarsd, 11 - nbarsd))
     nbars = max(3, nbars)
-    h = unifint(diff_lb, diff_ub, (nbars, 30))
-    w = unifint(diff_lb, diff_ub, (3, 30))
+    h = unifint(diff_lb, diff_ub, (10, 20))
+    w = unifint(diff_lb, diff_ub, (10, 20))
     barsizes = [2] * nbars
     while sum(barsizes) < h:
         j = randint(0, nbars - 1)
@@ -2045,7 +2075,7 @@ def generate_855e0971(diff_lb: float, diff_ub: float) -> dict:
     gi = tuple()
     go = tuple()
     locs = interval(0, w, 1)
-    dotc = choice(cols)
+    dotc = 0 # choice(cols)
     remcols = remove(dotc, cols)
     lastcol = -1
     nloclbs = [choice((0, 1)) for k in range(len(barsizes))]
@@ -2057,7 +2087,7 @@ def generate_855e0971(diff_lb: float, diff_ub: float) -> dict:
         col = choice(remove(lastcol, remcols))
         gim = canvas(col, (bs, w))
         gom = canvas(col, (bs, w))
-        nl = unifint(diff_lb, diff_ub, (nloclb, w // 2))
+        nl = unifint(diff_lb, diff_ub, (0, 3)) # (nloclb, w // 5))
         chlocs = sample(locs, nl)
         for jj in chlocs:
             idx = (randint(0, bs - 1), jj)
@@ -2074,17 +2104,17 @@ def generate_855e0971(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_137eaa0f(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (2, 4))
-    w = unifint(diff_lb, diff_ub, (2, 4))
-    bgc = choice(cols)
+    h = 3 # unifint(diff_lb, diff_ub, (2, 4))
+    w = 3 # unifint(diff_lb, diff_ub, (2, 4))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
-    dotc = choice(remcols)
+    dotc = 5 # choice(remcols)
     remcols = remove(dotc, remcols)
     go = canvas(dotc, (h, w))
     inds = totuple(asindices(go))
-    loc = choice(inds)
+    loc = (1, 1) # choice(inds)
     reminds = remove(loc, inds)
-    nc = unifint(diff_lb, diff_ub, (1, min(h * w - 1, 8)))
+    nc = unifint(diff_lb, diff_ub, (2, 5)) # min(h * w - 1, 8)))
     choscols = sample(remcols, nc)
     cd = {c: set() for c in choscols}
     for c in choscols:
@@ -2095,8 +2125,8 @@ def generate_137eaa0f(diff_lb: float, diff_ub: float) -> dict:
         cd[choice(choscols)].add(ri)
     for c, idxes in cd.items():
         go = fill(go, c, idxes)
-    gih = unifint(diff_lb, diff_ub, (min(h, w) * 2, 30))
-    giw = unifint(diff_lb, diff_ub, (min(h, w) * 2, 30))
+    gih = 11 # unifint(diff_lb, diff_ub, (min(h, w) * 2, 30))
+    giw = 11 # unifint(diff_lb, diff_ub, (min(h, w) * 2, 30))
     objs = tuple(
         normalize(insert((dotc, loc), frozenset({(c, ij) for ij in cd[c]}))) \
             for c in choscols
@@ -2131,27 +2161,27 @@ def generate_137eaa0f(diff_lb: float, diff_ub: float) -> dict:
         if maxtrtot < 1000:
             break
         maxtr = int(maxtr * 1.5)
-        gih = randint(gih, 30)
-        giw = randint(giw, 30)
+        gih = 11 # randint(gih, 30)
+        giw = 11 # randint(giw, 30)
     return {'input': gi, 'output': go}
 
 
 def generate_31aa019c(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
     while True:
-        h = unifint(diff_lb, diff_ub, (5, 30))
-        w = unifint(diff_lb, diff_ub, (5, 30))
-        bgc = choice(cols)
+        h = 10 # unifint(diff_lb, diff_ub, (5, 30))
+        w = 10 # unifint(diff_lb, diff_ub, (5, 30))
+        bgc = 0 # choice(cols)
         remcols = remove(bgc, cols)
         canv = canvas(bgc, (h, w))
         inds = totuple(asindices(canv))
         mp = (h * w) // 2 - 1
-        ncols = unifint(diff_lb, diff_ub, (2, min(9, mp // 2 - 1)))
+        ncols = unifint(diff_lb, diff_ub, (5, min(9, mp // 2 - 1)))
         chcols = sample(cols, ncols)
         trgcol = chcols[0]
         chcols = chcols[1:]
         dic = {c: set() for c in chcols}
-        nnoise = unifint(diff_lb, diff_ub, (2 * (ncols - 1), mp))
+        nnoise = unifint(diff_lb, diff_ub, (10, 20)) # 2 * (ncols - 1), mp))
         locc = choice(inds)
         inds = remove(locc, inds)
         noise = sample(inds, nnoise)
@@ -2182,9 +2212,9 @@ def generate_31aa019c(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_2bee17df(diff_lb: float, diff_ub: float) -> dict:
     cols = remove(3, interval(0, 10, 1))
-    h = unifint(diff_lb, diff_ub, (7, 30))
-    w = unifint(diff_lb, diff_ub, (7, 30))
-    bgc = choice(cols)
+    h = unifint(diff_lb, diff_ub, (7, 20))
+    w = h # unifint(diff_lb, diff_ub, (7, 20))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     c = canvas(bgc, (h, w))
     indord1 = apply(tojvec, interval(0, w, 1))
@@ -2198,9 +2228,9 @@ def generate_2bee17df(diff_lb: float, diff_ub: float) -> dict:
     ep = randint(k // 2 - 3, k // 2 + 1)
     a = arr[:ep]
     b = arr[ep:]
-    cola = choice(remcols)
+    cola = 2 # choice(remcols)
     remcols = remove(cola, remcols)
-    colb = choice(remcols)
+    colb = 8 # choice(remcols)
     gi = fill(c, cola, a)
     gi = fill(gi, colb, b)
     nr = unifint(diff_lb, diff_ub, (1, min(4, min(h, w) // 2)))
@@ -2220,9 +2250,9 @@ def generate_2bee17df(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_50cb2852(diff_lb: float, diff_ub: float) -> dict:
     cols = remove(8, interval(0, 10, 1))
-    h = unifint(diff_lb, diff_ub, (10, 30))
-    w = unifint(diff_lb, diff_ub, (10, 30))
-    bgc = choice(cols)
+    h = unifint(diff_lb, diff_ub, (10, 25))
+    w = unifint(diff_lb, diff_ub, (10, 25))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     gi = canvas(bgc, (h, w))
     go = canvas(bgc, (h, w))
@@ -2257,10 +2287,10 @@ def generate_50cb2852(diff_lb: float, diff_ub: float) -> dict:
 
 
 def generate_662c240a(diff_lb: float, diff_ub: float) -> dict:
-    cols = interval(0, 10, 1)
-    d = unifint(diff_lb, diff_ub, (2, 7))
-    ng = unifint(diff_lb, diff_ub, (2, 30 // d))
-    nc = unifint(diff_lb, diff_ub, (2, min(9, d ** 2)))
+    cols = interval(1, 10, 1)
+    d = 3 # unifint(diff_lb, diff_ub, (2, 7))
+    ng = 3 # unifint(diff_lb, diff_ub, (2, 30 // d))
+    nc = 2 # unifint(diff_lb, diff_ub, (2, min(9, d ** 2)))
     c = canvas(-1, (d, d))
     inds = totuple(asindices(c))
     tria = sfilter(inds, lambda ij: ij[1] >= ij[0])
@@ -2279,7 +2309,7 @@ def generate_662c240a(diff_lb: float, diff_ub: float) -> dict:
             gik = fill(gik, gik[ij[1]][ij[0]], {ij})
     gi = gik
     go = tuple(e for e in gik)
-    concatf = choice((hconcat, vconcat))
+    concatf = vconcat # choice((hconcat, vconcat))
     for k in range(ng - 1):
         tria = sfilter(inds, lambda ij: ij[1] >= ij[0])
         tcolset = sample(cols, nc)
@@ -2307,11 +2337,11 @@ def generate_e8593010(diff_lb: float, diff_ub: float) -> dict:
     a, b, c = totuple(a), totuple(b), totuple(c)
     prs = [(a, 3), (b, 2), (c, 1)]
     cols = difference(interval(0, 10, 1), (1, 2, 3))
-    h = unifint(diff_lb, diff_ub, (5, 30))
-    w = unifint(diff_lb, diff_ub, (5, 30))
-    bgc = choice(cols)
+    h = 10 # unifint(diff_lb, diff_ub, (5, 30))
+    w = 10 # unifint(diff_lb, diff_ub, (5, 30))
+    bgc = 5 # choice(cols)
     remcols = remove(bgc, cols)
-    fgc = choice(remcols)
+    fgc = 0 # choice(remcols)
     gi = canvas(bgc, (h, w))
     go = canvas(bgc, (h, w))
     reminds = asindices(gi)
@@ -2337,13 +2367,13 @@ def generate_e8593010(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_d9f24cd1(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (5, 30))
-    w = unifint(diff_lb, diff_ub, (5, 30))
-    bgc = choice(cols)
+    h = 10 # unifint(diff_lb, diff_ub, (5, 30))
+    w = 10 # unifint(diff_lb, diff_ub, (5, 30))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
-    linc = choice(remcols)
+    linc = 2 # choice(remcols)
     remcols = remove(linc, remcols)
-    dotc = choice(remcols)
+    dotc = 5 # choice(remcols)
     locopts = interval(1, w - 1, 1)
     maxnloc = (w - 2) // 2
     nlins = unifint(diff_lb, diff_ub, (1, maxnloc))
@@ -2383,7 +2413,7 @@ def generate_d9f24cd1(diff_lb: float, diff_ub: float) -> dict:
             go = fill(go, linc, connect((jj + 1, linloc + 1), (0, linloc + 1)))
         else:
             go = fill(go, linc, connect((h - 1, linloc), (0, linloc)))
-    rotf = choice((identity, rot90, rot180, rot270))
+    rotf = identity # choice((identity, rot90, rot180, rot270))
     gi = rotf(gi)
     go = rotf(go)
     return {'input': gi, 'output': go}
@@ -2391,8 +2421,8 @@ def generate_d9f24cd1(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_90c28cc7(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(1, 10, 1)
-    h = unifint(diff_lb, diff_ub, (2, 10))
-    w = unifint(diff_lb, diff_ub, (2, 10))
+    h = unifint(diff_lb, diff_ub, (2, 3))
+    w = unifint(diff_lb, diff_ub, (2, 3))
     nc = unifint(diff_lb, diff_ub, (2, 9))
     gi = canvas(-1, (h, w))
     inds = totuple(asindices(gi))
@@ -2402,8 +2432,8 @@ def generate_90c28cc7(diff_lb: float, diff_ub: float) -> dict:
     gi = dmirror(dedupe(dmirror(dedupe(gi))))
     go = tuple(e for e in gi)
     h, w = shape(gi)
-    fullh = unifint(diff_lb, diff_ub, (h, 30))
-    fullw = unifint(diff_lb, diff_ub, (w, 30))
+    fullh = unifint(diff_lb, diff_ub, (h, 20))
+    fullw = unifint(diff_lb, diff_ub, (w, 20))
     inh = unifint(diff_lb, diff_ub, (h, fullh))
     inw = unifint(diff_lb, diff_ub, (w, fullw))
     while h < inh or w < inw:
@@ -2434,8 +2464,8 @@ def generate_90c28cc7(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_321b1fc6(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (8, 30))
-    w = unifint(diff_lb, diff_ub, (8, 30))
+    h = unifint(diff_lb, diff_ub, (8, 10))
+    w = unifint(diff_lb, diff_ub, (8, 10))
     objh = unifint(diff_lb, diff_ub, (2, 5))
     objw = unifint(diff_lb, diff_ub, (2, 5))
     bounds = asindices(canvas(0, (objh, objw)))
@@ -2445,15 +2475,15 @@ def generate_321b1fc6(diff_lb: float, diff_ub: float) -> dict:
         ij = choice(totuple((bounds - shp) & mapply(dneighbors, shp)))
         shp.add(ij)
     shp = normalize(shp)
-    bgc = choice(cols)
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
-    dmyc = choice(remcols)
+    dmyc = 8 # choice(remcols)
     remcols = remove(dmyc, remcols)
     oh, ow = shape(shp)
     loci = randint(0, h - oh)
     locj = randint(0, w - ow)
     shpp = shift(shp, (loci, locj))
-    numco = unifint(diff_lb, diff_ub, (2, 8))
+    numco = unifint(diff_lb, diff_ub, (2, 5))
     colll = sample(remcols, numco)
     shppc = frozenset({(choice(colll), ij) for ij in shpp})
     while numcolors(shppc) == 1:
@@ -2463,7 +2493,7 @@ def generate_321b1fc6(diff_lb: float, diff_ub: float) -> dict:
     gi = paint(gi, shppc)
     go = tuple(e for e in gi)
     ub = ((h * w) / (oh * ow)) // 2
-    ub = max(1, ub)
+    ub = 5 # max(1, ub)
     numlocs = unifint(diff_lb, diff_ub, (1, ub))
     cnt = 0
     fails = 0
@@ -2492,8 +2522,8 @@ def generate_6455b5f5(diff_lb: float, diff_ub: float) -> dict:
     while True:
         h = unifint(diff_lb, diff_ub, (6, 30))
         w = unifint(diff_lb, diff_ub, (6, 30))
-        bgc = choice(cols)
-        fgc = choice(remove(bgc, cols))
+        bgc = 0 # choice(cols)
+        fgc = 2 # choice(remove(bgc, cols))
         gi = canvas(bgc, (h, w))
         ub = int((h * w) ** 0.5 * 1.5)
         num = unifint(diff_lb, diff_ub, (1, ub))
@@ -2537,7 +2567,7 @@ def generate_4c5c2cf0(diff_lb: float, diff_ub: float) -> dict:
     w = unifint(diff_lb, diff_ub, (10, 30))
     oh = unifint(diff_lb, diff_ub, (2, (h - 3) // 2))
     ow = unifint(diff_lb, diff_ub, (2, (w - 3) // 2))
-    bgc = choice(cols)
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     cc = choice(remcols)
     remcols = remove(cc, remcols)
@@ -2579,13 +2609,13 @@ def generate_4c5c2cf0(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_56ff96f3(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)    
-    h = unifint(diff_lb, diff_ub, (10, 30))
-    w = unifint(diff_lb, diff_ub, (10, 30))
-    bgc = choice(cols)
+    h = unifint(diff_lb, diff_ub, (10, 20))
+    w = unifint(diff_lb, diff_ub, (10, 20))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     gi = canvas(bgc, (h, w))
     go = canvas(bgc, (h, w))
-    num = unifint(diff_lb, diff_ub, (1, 9))
+    num = unifint(diff_lb, diff_ub, (1, 2))
     indss = asindices(gi)
     maxtrials = 4 * num
     tr = 0
@@ -2618,9 +2648,9 @@ def generate_56ff96f3(diff_lb: float, diff_ub: float) -> dict:
 
 
 def generate_2c608aff(diff_lb: float, diff_ub: float) -> dict:
-    cols = interval(0, 10, 1)    
-    h = unifint(diff_lb, diff_ub, (10, 30))
-    w = unifint(diff_lb, diff_ub, (10, 30))
+    cols = interval(1, 10, 1)    
+    h = unifint(diff_lb, diff_ub, (10, 20))
+    w = unifint(diff_lb, diff_ub, (10, 20))
     boxh = unifint(diff_lb, diff_ub, (2, h // 2))
     boxw = unifint(diff_lb, diff_ub, (2, w // 2))
     loci = randint(0, h - boxh)
@@ -2653,11 +2683,11 @@ def generate_2c608aff(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_e98196ab(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)    
-    h = unifint(diff_lb, diff_ub, (3, 14))
-    w = unifint(diff_lb, diff_ub, (3, 30))
-    bgc = choice(cols)
+    h = 5 # unifint(diff_lb, diff_ub, (3, 14))
+    w = 11 # unifint(diff_lb, diff_ub, (3, 30))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
-    linc = choice(remcols)
+    linc = 5 # choice(remcols)
     remcols = remove(linc, remcols)
     topc = choice(remcols)
     remcols = remove(topc, remcols)
@@ -2674,9 +2704,9 @@ def generate_e98196ab(diff_lb: float, diff_ub: float) -> dict:
     go = fill(topg, botc, B)
     br = canvas(linc, (1, w))
     gi = vconcat(vconcat(topg, br), botg)
-    if choice((True, False)):
-        gi = dmirror(gi)
-        go = dmirror(go)
+    # if choice((True, False)):
+    #     gi = dmirror(gi)
+    #     go = dmirror(go)
     return {'input': gi, 'output': go}
 
 
@@ -2686,7 +2716,7 @@ def generate_c9f8e694(diff_lb: float, diff_ub: float) -> dict:
     w = unifint(diff_lb, diff_ub, (5, 30))
     bgc = 0
     remcols = remove(bgc, cols)
-    sqc = choice(remcols)
+    sqc = 5 # choice(remcols)
     remcols = remove(sqc, remcols)
     ncols = unifint(diff_lb, diff_ub, (1, min(h, 8)))
     nsq = unifint(diff_lb, diff_ub, (1, 8))
@@ -2714,14 +2744,14 @@ def generate_c9f8e694(diff_lb: float, diff_ub: float) -> dict:
     gi = hconcat(gil, gir)
     giro = paint(gir, fullobj)
     go = hconcat(gil, giro)
-    rotf = choice((identity, rot90, rot180, rot270))
+    rotf = identity # choice((identity, rot90, rot180, rot270))
     gi = rotf(gi)
     go = rotf(go)
     return {'input': gi, 'output': go}
 
 
 def generate_eb5a1d5d(diff_lb: float, diff_ub: float) -> dict:
-    cols = interval(0, 10, 1)
+    cols = interval(1, 10, 1)
     d = unifint(diff_lb, diff_ub, (2, 10))
     go = canvas(-1, (d*2-1, d*2-1))
     colss = sample(cols, d)
@@ -2748,9 +2778,9 @@ def generate_eb5a1d5d(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_82819916(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (5, 30))
-    w = unifint(diff_lb, diff_ub, (5, 30))
-    bgc = choice(cols)
+    h = unifint(diff_lb, diff_ub, (5, 20))
+    w = unifint(diff_lb, diff_ub, (5, 20))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     ass, bss = sample(remcols, 2)
     itv = interval(0, w, 1)
@@ -2759,12 +2789,12 @@ def generate_82819916(diff_lb: float, diff_ub: float) -> dict:
     blocs = difference(itv, alocs)
     if min(alocs) > min(blocs):
         alocs, blocs = blocs, alocs
-    llocs = randint(0, h - 1)
+    llocs = 1 # randint(0, h - 1)
     gi = canvas(bgc, (h, w))
     gi = fill(gi, ass, {(llocs, j) for j in alocs})
     gi = fill(gi, bss, {(llocs, j) for j in blocs})
-    numl = unifint(diff_lb, diff_ub, (1, max(1, (h-1)//2)))
-    remlocs = remove(llocs, interval(0, h, 1))
+    numl = unifint(diff_lb, diff_ub, (1, max(1, (h-3)//2)))
+    remlocs = remove(llocs, interval(3, h, 1))
     for k in range(numl):
         lloc = choice(remlocs)
         remlocs = remove(lloc, remlocs)
@@ -2776,7 +2806,7 @@ def generate_82819916(diff_lb: float, diff_ub: float) -> dict:
     gi = fill(gi, bgc, backdrop(frozenset({(0, cutoff), (h - 1, w - 1)})))
     gi = fill(gi, ass, {(llocs, j) for j in alocs})
     gi = fill(gi, bss, {(llocs, j) for j in blocs})
-    rotf = choice((identity, rot90, rot180, rot270))
+    rotf = identity # choice((identity, rot90, rot180, rot270))
     gi = rotf(gi)
     go = rotf(go)
     return {'input': gi, 'output': go}
@@ -2784,8 +2814,8 @@ def generate_82819916(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_5daaa586(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (7, 30))
-    w = unifint(diff_lb, diff_ub, (7, 30))
+    h = unifint(diff_lb, diff_ub, (7, 20))
+    w = unifint(diff_lb, diff_ub, (7, 20))
     loci1 = randint(1, h - 4)
     locj1 = randint(1, w - 4)
     loci1dev = unifint(diff_lb, diff_ub, (0, loci1 - 1))
@@ -2794,7 +2824,7 @@ def generate_5daaa586(diff_lb: float, diff_ub: float) -> dict:
     locj1 -= locj1dev
     loci2 = unifint(diff_lb, diff_ub, (loci1 + 2, h - 2))
     locj2 = unifint(diff_lb, diff_ub, (locj1 + 2, w - 2))
-    bgc = choice(cols)
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     c1, c2, c3, c4 = sample(remcols, 4)
     f1 = recolor(c1, hfrontier(toivec(loci1)))
@@ -2808,7 +2838,7 @@ def generate_5daaa586(diff_lb: float, diff_ub: float) -> dict:
         gi = paint(gi, fr)
     cands = totuple(ofcolor(gi, bgc))
     nn = len(cands)
-    nnoise = unifint(diff_lb, diff_ub, (1, max(1, nn // 3)))
+    nnoise = unifint(diff_lb, diff_ub, (1, max(1, nn // 4)))
     noise = sample(cands, nnoise)
     gi = fill(gi, c1, noise)
     while len(frontiers(gi)) > 4:
@@ -2828,9 +2858,9 @@ def generate_5daaa586(diff_lb: float, diff_ub: float) -> dict:
 
 
 def generate_68b16354(diff_lb: float, diff_ub: float) -> dict:
-    cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (1, 30))
-    w = unifint(diff_lb, diff_ub, (1, 30))
+    cols = interval(1, 10, 1)
+    h = unifint(diff_lb, diff_ub, (5, 15))
+    w = h # unifint(diff_lb, diff_ub, (5, 15))
     bgc = choice(cols)
     gi = canvas(bgc, (h, w))
     remcols = remove(bgc, cols)
@@ -2848,13 +2878,13 @@ def generate_68b16354(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_bb43febb(diff_lb: float, diff_ub: float) -> dict:
     cols = remove(2, interval(0, 10, 1))
-    h = unifint(diff_lb, diff_ub, (10, 30))
-    w = unifint(diff_lb, diff_ub, (10, 30))
-    bgc = choice(cols)
+    h = 10 # unifint(diff_lb, diff_ub, (10, 30))
+    w = 10 # unifint(diff_lb, diff_ub, (10, 30))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     gi = canvas(bgc, (h, w))
     go = canvas(bgc, (h, w))
-    num = unifint(diff_lb, diff_ub, (1, 8))
+    num = 2 # unifint(diff_lb, diff_ub, (1, 8))
     indss = asindices(gi)
     maxtrials = 4 * num
     tr = 0
@@ -2871,7 +2901,7 @@ def generate_bb43febb(diff_lb: float, diff_ub: float) -> dict:
         loci, locj = choice(subs)
         obj = frozenset({(loci, locj), (loci + oh - 1, locj + ow - 1)})
         bd = backdrop(obj)
-        col = choice(remcols)
+        col = 5 # choice(remcols)
         if bd.issubset(indss):
             remcols = remove(col, remcols)
             gi = fill(gi, col, bd)
@@ -2885,11 +2915,11 @@ def generate_bb43febb(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_9ecd008a(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(1, 10, 1)
-    h = unifint(diff_lb, diff_ub, (3, 15))
+    h = 8 # unifint(diff_lb, diff_ub, (3, 15))
     w = h
     bgc = choice(cols)
     remcols = remove(bgc, cols)
-    numcols = unifint(diff_lb, diff_ub, (1, 8))
+    numcols = unifint(diff_lb, diff_ub, (5, 8))
     remcols = sample(remcols, numcols)
     canv = canvas(bgc, (h, w))
     nc = unifint(diff_lb, diff_ub, (1, h * w))
@@ -2905,12 +2935,12 @@ def generate_9ecd008a(diff_lb: float, diff_ub: float) -> dict:
     gi = paint(gi, tr)
     gi = hconcat(gi, vmirror(gi))
     gi = vconcat(gi, hmirror(gi))
-    locidev = unifint(diff_lb, diff_ub, (1, 2*h))
-    locjdev = unifint(diff_lb, diff_ub, (1, w))
+    locidev = unifint(diff_lb, diff_ub, (1, 2*h - 2))
+    locjdev = unifint(diff_lb, diff_ub, (1, w - 2))
     loci = 2*h - locidev
     locj = w - locjdev
-    loci2 = unifint(diff_lb, diff_ub, (loci, 2*h - 1))
-    locj2 = unifint(diff_lb, diff_ub, (locj, w - 1))
+    loci2 = loci + 2 # unifint(diff_lb, diff_ub, (loci, 2*h - 1))
+    locj2 = locj + 2 # unifint(diff_lb, diff_ub, (locj, w - 1))
     bd = backdrop(frozenset({(loci, locj), (loci2, locj2)}))
     go = subgrid(bd, gi)
     gi = fill(gi, 0, bd)
@@ -2922,12 +2952,12 @@ def generate_9ecd008a(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_f25ffba3(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(1, 10, 1)
-    h = unifint(diff_lb, diff_ub, (1, 14))
+    h = unifint(diff_lb, diff_ub, (1, 3))
     h = h * 2 + 1
-    w = unifint(diff_lb, diff_ub, (3, 15))
-    bgc = choice(cols)
+    w = unifint(diff_lb, diff_ub, (3, 10))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
-    numcols = unifint(diff_lb, diff_ub, (1, 8))
+    numcols = unifint(diff_lb, diff_ub, (1, 4))
     remcols = sample(remcols, numcols)
     canv = canvas(bgc, (h, w))
     nc = unifint(diff_lb, diff_ub, (2, h * w - 2))
@@ -2947,12 +2977,14 @@ def generate_f25ffba3(diff_lb: float, diff_ub: float) -> dict:
     gix = apply(rbind(order, matcher(identity, bgc)), gix)
     gi = hconcat(gix, canv)
     go = hconcat(gix, vmirror(gix))
-    if choice((True, False)):
-        gi = vmirror(gi)
-        go = vmirror(go)
-    if choice((True, False)):
-        gi = hmirror(gi)
-        go = hmirror(go)
+    gi = rot90(gi)
+    go = rot90(go)
+    # if choice((True, False)):
+    #     gi = vmirror(gi)
+    #     go = vmirror(go)
+    # if choice((True, False)):
+    #     gi = hmirror(gi)
+    #     go = hmirror(go)
     return {'input': gi, 'output': go}
 
 
@@ -2960,7 +2992,7 @@ def generate_3bdb4ada(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
     h = unifint(diff_lb, diff_ub, (10, 30))
     w = unifint(diff_lb, diff_ub, (10, 30))
-    bgc = choice(cols)
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     gi = canvas(bgc, (h, w))
     go = canvas(bgc, (h, w))
@@ -3003,9 +3035,9 @@ def generate_3bdb4ada(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_2013d3e2(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(1, 10, 1)
-    h = unifint(diff_lb, diff_ub, (3, 10))
+    h = 3 # unifint(diff_lb, diff_ub, (3, 6))
     w = h
-    bgc = choice(cols)
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     numcols = unifint(diff_lb, diff_ub, (1, 8))
     remcols = sample(remcols, numcols)
@@ -3022,8 +3054,8 @@ def generate_2013d3e2(diff_lb: float, diff_ub: float) -> dict:
     gi1 = hconcat(gi, rot90(gi))
     gi2 = hconcat(rot270(gi), rot180(gi))
     gi = vconcat(gi1, gi2)
-    fullh = unifint(diff_lb, diff_ub, (2*h, 30))
-    fullw = unifint(diff_lb, diff_ub, (2*w, 30))
+    fullh = unifint(diff_lb, diff_ub, (2*h, 15))
+    fullw = fullh # unifint(diff_lb, diff_ub, (2*w, 10))
     gio = asobject(gi)
     gic = canvas(bgc, (fullh, fullw))
     loci = randint(0, fullh - 2*h)
@@ -3038,7 +3070,7 @@ def generate_aabf363d(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
     h = unifint(diff_lb, diff_ub, (3, 28))
     w = unifint(diff_lb, diff_ub, (3, 28))
-    bgc = choice(cols)
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     cola = choice(remcols)
     remcols = remove(cola, remcols)
@@ -3056,7 +3088,7 @@ def generate_aabf363d(diff_lb: float, diff_ub: float) -> dict:
     c2 = canvas(bgc, (h+2, w+2))
     gi = fill(c2, cola, shp)
     go = fill(c2, colb, shp)
-    gi = fill(gi, colb, {choice(totuple(ofcolor(gi, bgc)))})
+    gi = fill(gi, colb, {(h + 1, 0)}) # choice(totuple(ofcolor(gi, bgc)))})
     return {'input': gi, 'output': go}
 
 
@@ -3064,7 +3096,7 @@ def generate_d037b0a7(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
     h = unifint(diff_lb, diff_ub, (3, 30))
     w = unifint(diff_lb, diff_ub, (3, 30))
-    bgc = choice(cols)
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     gi = canvas(bgc, (h, w))
     go = canvas(bgc, (h, w))
@@ -3080,7 +3112,7 @@ def generate_d037b0a7(diff_lb: float, diff_ub: float) -> dict:
 
 
 def generate_e26a3af2(diff_lb: float, diff_ub: float) -> dict:
-    cols = interval(0, 10, 1)
+    cols = interval(1, 10, 1)
     nr = unifint(diff_lb, diff_ub, (1, 10))
     w = unifint(diff_lb, diff_ub, (4, 30))
     scols = sample(cols, nr)
@@ -3162,7 +3194,7 @@ def generate_ba97ae07(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
     h = unifint(diff_lb, diff_ub, (3, 30))
     w = unifint(diff_lb, diff_ub, (3, 30))
-    bgc = choice(cols)
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     gi = canvas(bgc, (h, w))
     go = canvas(bgc, (h, w))
@@ -3188,10 +3220,10 @@ def generate_ba97ae07(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_c909285e(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (5, 30))
-    w = unifint(diff_lb, diff_ub, (5, 30))
-    nfronts = unifint(diff_lb, diff_ub, (1, (h + w) // 2))
-    bgc = choice(cols)
+    h = unifint(diff_lb, diff_ub, (20, 30))
+    w = h # unifint(diff_lb, diff_ub, (20, 30))
+    nfronts = unifint(diff_lb, diff_ub, (10, (h + w) // 2))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     boxcol = choice(remcols)
     remcols = remove(boxcol, remcols)
@@ -3204,7 +3236,7 @@ def generate_c909285e(diff_lb: float, diff_ub: float) -> dict:
         col = choice(remcols)
         gi = fill(gi, col, ff(loc))
     oh = unifint(diff_lb, diff_ub, (3, max(3, (h - 2) // 2)))
-    ow = unifint(diff_lb, diff_ub, (3, max(3, (w - 2) // 2)))
+    ow = oh # unifint(diff_lb, diff_ub, (3, max(3, (w - 2) // 2)))
     loci = randint(1, h - oh - 1)
     locj = randint(1, w - ow - 1)
     bx = box(frozenset({(loci, locj), (loci + oh - 1, locj + ow - 1)}))
@@ -3240,12 +3272,12 @@ def generate_d511f180(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_d0f5fe59(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (10, 30))
-    w = unifint(diff_lb, diff_ub, (10, 30))
-    nobjs = unifint(diff_lb, diff_ub, (1, min(30, (h * w) // 9)))
-    bgc = choice(cols)
+    h = unifint(diff_lb, diff_ub, (10, 20))
+    w = unifint(diff_lb, diff_ub, (10, 20))
+    nobjs = unifint(diff_lb, diff_ub, (1, 8)) # min(30, (h * w) // 9)))
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
-    fgc = choice(remcols)
+    fgc = 8 # choice(remcols)
     nfound = 0
     trials = 0
     maxtrials = nobjs * 5
@@ -3519,8 +3551,12 @@ def generate_54d82841(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_d631b094(diff_lb: float, diff_ub: float) -> dict:
     cols = interval(0, 10, 1)
-    h = unifint(diff_lb, diff_ub, (2, 30))
-    w = unifint(diff_lb, diff_ub, (2, 30))
+    if True:
+        h = unifint(diff_lb, diff_ub, (2, 30))
+        w = unifint(diff_lb, diff_ub, (2, 30))
+    else:
+        h = 16 # unifint(diff_lb, diff_ub, (2, 30))
+        w = 16 # unifint(diff_lb, diff_ub, (2, 30))
     bgc = 0
     remcols = remove(bgc, cols)
     fgc = choice(remcols)
@@ -4898,12 +4934,17 @@ def generate_d5d6de2d(diff_lb: float, diff_ub: float) -> dict:
 
 
 def generate_4612dd53(diff_lb: float, diff_ub: float) -> dict:
-    cols = remove(2, interval(0, 10, 1))
-    h = unifint(diff_lb, diff_ub, (8, 30))
-    w = unifint(diff_lb, diff_ub, (8, 30))
+    cols = remove(0, remove(2, interval(0, 10, 1)))
+    if True:
+        h = unifint(diff_lb, diff_ub, (8, 30))
+        w = unifint(diff_lb, diff_ub, (8, 30))
+    else:
+        h = 16 # unifint(diff_lb, diff_ub, (8, 30))
+        w = 16 # unifint(diff_lb, diff_ub, (8, 30))
     ih = unifint(diff_lb, diff_ub, (5, h-1))
     iw = unifint(diff_lb, diff_ub, (5, w-1))
-    bgc, col = sample(cols, 2)
+    bgc = 0
+    col= choice(cols)
     loci = randint(0, h - ih)
     locj = randint(0, w - iw)
     bx = box(frozenset({(loci, locj), (loci + ih - 1, locj + iw - 1)}))
@@ -4919,8 +4960,12 @@ def generate_4612dd53(diff_lb: float, diff_ub: float) -> dict:
     rembx = difference(bx, crns)
     onbr = sample(totuple(br), 2)
     rembr = difference(br, onbr)
-    noccbx = unifint(diff_lb, diff_ub, (0, len(rembx)))
-    noccbr = unifint(diff_lb, diff_ub, (0, len(rembr)))
+    if True:
+        noccbx = unifint(diff_lb, diff_ub, (0, len(rembx)))
+        noccbr = unifint(diff_lb, diff_ub, (0, len(rembr)))
+    else:
+        noccbx = min((2, len(rembx))) # unifint(diff_lb, diff_ub, (0, len(rembx)))
+        noccbr = 0 # min((2, len(rembr))) # unifint(diff_lb, diff_ub, (0, len(rembr)))
     occbx = sample(totuple(rembx), noccbx)
     occbr = sample(totuple(rembr), noccbr)
     c = fill(c, col, bx)
@@ -8374,15 +8419,16 @@ def generate_8e1813be(diff_lb: float, diff_ub: float) -> dict:
 
 
 def generate_5117e062(diff_lb: float, diff_ub: float) -> dict:
-    cols = interval(0, 10, 1)
+    cols = interval(1, 5, 1)
+    cols = (*cols, 7)
     h = unifint(diff_lb, diff_ub, (10, 30))
     w = unifint(diff_lb, diff_ub, (10, 30))
-    nobjs = unifint(diff_lb, diff_ub, (2, (h * w) // 15))
+    nobjs = unifint(diff_lb, diff_ub, (2, (h * w) // 20))
     tr = 0
     maxtr = 4 * nobjs
     done = False
     succ = 0
-    bgc = choice(cols)
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
     gi = canvas(bgc, (h, w))
     inds = asindices(gi)
@@ -8399,7 +8445,7 @@ def generate_5117e062(diff_lb: float, diff_ub: float) -> dict:
         if not done:
             done = True
             idx = choice(totuple(obj))
-            coll = choice(remcols)
+            coll = 8 # choice(remcols)
             obj2 = {(coll, idx)}
             coll2 = choice(remove(coll, remcols))
             obj3 = recolor(coll2, remove(idx, obj))
@@ -10915,7 +10961,7 @@ def generate_0dfd9992(diff_lb: float, diff_ub: float) -> dict:
     hp = unifint(diff_lb, diff_ub, (2, h//2-1))
     wp = unifint(diff_lb, diff_ub, (2, w//2-1))
     pinds = asindices(canvas(-1, (hp, wp)))
-    bgc, noisec = sample(cols, 2)
+    bgc, noisec = (choice(cols), 0)
     remcols = remove(noisec, cols)
     numc = unifint(diff_lb, diff_ub, (2, 9))
     ccols = sample(remcols, numc)
@@ -11283,10 +11329,10 @@ def generate_6cf79266(diff_lb: float, diff_ub: float) -> dict:
 
 def generate_a85d4709(diff_lb: float, diff_ub: float) -> dict:
     cols = difference(interval(0, 10, 1), (2, 3, 4))
-    h = unifint(diff_lb, diff_ub, (2, 30))
-    w3 = unifint(diff_lb, diff_ub, (1, 10))
+    h = 3 # unifint(diff_lb, diff_ub, (2, 30))
+    w3 = 1 # unifint(diff_lb, diff_ub, (1, 10))
     w = w3 * 3
-    bgc, dotc = sample(cols, 2)
+    bgc, dotc = (0, 5) # sample(cols, 2)
     gi = canvas(bgc, (h, w))
     go = canvas(bgc, (h, w))
     for ii in range(h):
@@ -13143,9 +13189,9 @@ def generate_228f6490(diff_lb: float, diff_ub: float) -> dict:
     succ = 0
     tr = 0
     maxtr = 5 * nsq
-    bgc = choice(cols)
+    bgc = 0 # choice(cols)
     remcols = remove(bgc, cols)
-    sqc = choice(remcols)
+    sqc = 5 # choice(remcols)
     remcols = remove(sqc, remcols)
     gi = canvas(bgc, (h, w))
     go = canvas(bgc, (h, w))
