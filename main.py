@@ -133,11 +133,13 @@ def generate_dataset(
                 stats['n_nondegenerate'] += 1
             except:
                 success = False
-            if success and identifier not in seen:
+            # NOTE: allow non unique examples, since we reduce the space of possible solutions
+            # and we run out of unique solutions for some examples
+            if success: # and identifier not in seen:
                 examples.append(example)
-                seen.add(identifier)
-                stats['rng_difficulties'].append(get_rng_difficulty(example))
-                stats['pso_difficulties'].append(get_pso_difficulty(example))
+                # seen.add(identifier)
+                # stats['rng_difficulties'].append(get_rng_difficulty(example))
+                # stats['pso_difficulties'].append(get_pso_difficulty(example))
                 desc = f'task {i+1}/{k}, example {len(examples)}/{n_examples}'
                 pbar.set_description(desc)
         end = time.time()
